@@ -1,12 +1,11 @@
 package com.thahawuru_wallet.application.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -18,14 +17,14 @@ public class Identity {
     private Long id;
 
     @Column(nullable = false)
-    private Date issuedDate;
+    private LocalDate issuedDate;
 
     @Column(nullable = false, unique = true)
     private String identityNumber;
 
     private String name;
     private String otherNames;
-    private Date birthDate;
+    private LocalDate birthDate;
     private String birthPlace;
     private String job;
     private String livingAddress;
