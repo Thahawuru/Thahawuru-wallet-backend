@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -25,9 +25,9 @@ public class License {
 
     private String name;
     private String livingAddress;
-    private Date birthDate;
-    private Date issuedDate;
-    private Date expiryDate;
+    private LocalDate birthDate;
+    private LocalDate issuedDate;
+    private LocalDate expiryDate;
     private String bloodGroup;
 
     @ElementCollection
