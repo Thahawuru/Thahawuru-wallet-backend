@@ -39,6 +39,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ApiError<ErrorDTO>> handleUserNotFoundException(Exception ex, WebRequest req){
+        ApiError<ErrorDTO> apiError = new ApiError<>(HttpStatus.NOT_FOUND.value(),new ErrorDTO("FORBIDDEN",ex.getMessage()));
+        return new ResponseEntity<>(apiError,HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(RequestForbiddenException.class)
+    public ResponseEntity<ApiError<ErrorDTO>> handleRequestForbiddenException(Exception ex, WebRequest req){
         ApiError<ErrorDTO> apiError = new ApiError<>(HttpStatus.NOT_FOUND.value(),new ErrorDTO("NOT_FOUND",ex.getMessage()));
         return new ResponseEntity<>(apiError,HttpStatus.INTERNAL_SERVER_ERROR);
     }

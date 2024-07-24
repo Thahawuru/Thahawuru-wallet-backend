@@ -26,7 +26,6 @@ public class UserService {
     }
 
     public UserResponseDTO getUser(UUID userid){
-        System.out.println("test");
         User user =  userRepository.findById(userid).orElseThrow(()-> new UserNotFoundException("User Not Found!"));
         return new UserResponseDTO(user.getId(),user.getEmail(),user.getNic());
     }
