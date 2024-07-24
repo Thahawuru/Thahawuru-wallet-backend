@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<UserResponseDTO>>> getUsers(){
-        List<UserResponseDTO> users =userService.allUsers();
+        List<UserResponseDTO> users = userService.allUsers();
         ApiResponse<List<UserResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),users,"suceess");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
