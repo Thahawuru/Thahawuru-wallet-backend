@@ -1,6 +1,8 @@
 package com.thahawuru_wallet.application.controller;
 
 import com.thahawuru_wallet.application.entity.License;
+import com.thahawuru_wallet.application.entity.NewLicense;
+import com.thahawuru_wallet.application.entity.UpdatedLicense;
 import com.thahawuru_wallet.application.service.LicenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +25,12 @@ public class LicenseController {
 
 
     @GetMapping("/updated")
-    public List<License> getAllUpdatedLicenses(){
+    public List<UpdatedLicense> getAllUpdatedLicenses(){
         return licenseService.getAllUpdatedLicenses();
     }
 
+    @GetMapping("/new")
+    public List<NewLicense> getAllNewLicenses(){
+        return licenseService.getAllNewLicenses();
+    }
 }

@@ -14,7 +14,6 @@ public interface IdentityRepository extends JpaRepository<Identity,Long> {
 }
 
 //
-//-- Insert 20 entries into the identities table
 //        INSERT INTO identities (issued_date, identity_number, name, other_names, birth_date, birth_place, job, living_address, document) VALUES
 //        ('2022-01-01', 'ID001', 'John Doe', 'Johnny', '1980-01-01', 'City A', 'Engineer', 'Address 1', 'Document 1'),
 //        ('2022-01-02', 'ID002', 'Jane Smith', 'Janie', '1985-05-15', 'City B', 'Doctor', 'Address 2', 'Document 2'),
