@@ -1,6 +1,8 @@
 package com.thahawuru_wallet.application.controller;
 
 import com.thahawuru_wallet.application.entity.Identity;
+import com.thahawuru_wallet.application.entity.NewIdentity;
+import com.thahawuru_wallet.application.entity.UpdatedIdentity;
 import com.thahawuru_wallet.application.service.IdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,12 @@ public class IdentityController {
     }
 
     @GetMapping("/updated")
-    public List<Identity> getAllUpdatedIdentities(){
+    public List<UpdatedIdentity> getAllUpdatedIdentities(){
         return identityService.getAllUpdatedIdentities();
+    }
+
+    @GetMapping("/new")
+    public List<NewIdentity> getAllNewIdentities(){
+        return identityService.getAllNewIdentities();
     }
 }

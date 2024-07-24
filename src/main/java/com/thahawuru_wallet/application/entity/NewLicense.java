@@ -13,8 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "licenses")
-public class License {
+@Table(name = "newLicenses")
+public class NewLicense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
