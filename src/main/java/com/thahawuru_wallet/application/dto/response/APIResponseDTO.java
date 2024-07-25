@@ -12,7 +12,7 @@ import java.util.UUID;
 public class APIResponseDTO {
     private UUID APIid;
     private String APIType;
-    private UUID developerId;
+//    private UUID developerId;
     private String name;
     private String organizationName;
     private String email;

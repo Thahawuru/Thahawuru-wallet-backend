@@ -1,24 +1,23 @@
 package com.thahawuru_wallet.application.entity;
 
-
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
-@Table(name="users")
+@Table(name = "api_users")
 public class ApiUser {
 
     @Id
@@ -27,28 +26,38 @@ public class ApiUser {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "user_id", updatable = false, nullable = false)
+    @Column(name = "api_user_id", updatable = false, nullable = false)
     private UUID id;
 
-    @NotNull(message = "Email is required")
-    @NotBlank(message = "Email cannot be blank!")
-    @Email(message = "Email not valid!")
+//    @Column(nullable = false)
+    private String APIType;
+
+//    @Column(nullable = false)
+//    private UUID developerId;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String organizationName;
+
     @Column(nullable = false,unique = true)
     private String email;
+
+    @Column(nullable = false)
+    private String number;
+
+    @Column(nullable = false)
+    private String purpose;
+
+    @Column(nullable = false)
+    private String description;
 
     @NotNull(message = "Password is required")
     @NotBlank(message = "Password cannot be blank!")
     @Column(nullable = false)
     private String password;
 
-
-    @NotNull(message = "Organization is required")
-    @NotBlank(message = "Organization cannot be blank")
-    @Column(nullable = false)
-    private String organization;
-
-
-    
-
-
+//    @Column(nullable = false)
+    private String apikey;
 }

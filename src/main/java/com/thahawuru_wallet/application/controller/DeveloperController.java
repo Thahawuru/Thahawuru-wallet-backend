@@ -2,11 +2,8 @@ package com.thahawuru_wallet.application.controller;
 
 import com.thahawuru_wallet.application.dto.response.APIResponseDTO;
 import com.thahawuru_wallet.application.dto.response.ApiResponse;
-import com.thahawuru_wallet.application.dto.response.MaintainerResponseDTO;
-import com.thahawuru_wallet.application.entity.API;
-import com.thahawuru_wallet.application.entity.Maintainer;
-import com.thahawuru_wallet.application.service.APIService;
-import com.thahawuru_wallet.application.service.MaintainerService;
+import com.thahawuru_wallet.application.entity.ApiUser;
+import com.thahawuru_wallet.application.service.ApiUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +16,10 @@ import java.util.UUID;
 public class DeveloperController {
 
     @Autowired
-    private APIService apiService;
+    private ApiUserService apiService;
 
     @PostMapping ("/apiRequest")
-    public ResponseEntity<ApiResponse<APIResponseDTO>> createAPI(@RequestBody API api){
+    public ResponseEntity<ApiResponse<APIResponseDTO>> createAPI(@RequestBody ApiUser api){
         ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),apiService.createApi(api),"created");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
