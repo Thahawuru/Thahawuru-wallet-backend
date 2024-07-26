@@ -1,6 +1,7 @@
 package com.thahawuru_wallet.application.entity;
 
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name="users")
-public class User {
+public class ApiUser {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -40,8 +41,14 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @NotNull(message = "NIC is required")
-    @NotBlank(message = "NIC cannot be blank")
+
+    @NotNull(message = "Organization is required")
+    @NotBlank(message = "Organization cannot be blank")
     @Column(nullable = false)
-    private String nic;
+    private String organization;
+
+
+    
+
+
 }

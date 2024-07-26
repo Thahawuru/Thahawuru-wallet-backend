@@ -32,6 +32,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponseDTO>> registerUser(@Valid @RequestBody User user){
+        System.out.println(user.getNic()+"user");
         ApiResponse<UserResponseDTO> response  = new ApiResponse<>(HttpStatus.CREATED.value(),authService.registerUser(user),"created");
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
