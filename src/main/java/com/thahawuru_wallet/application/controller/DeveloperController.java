@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -27,10 +28,17 @@ public class DeveloperController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{developerId}")
-    public ResponseEntity<ApiResponse<APIResponseDTO>> viewApiRequests(@PathVariable UUID developerId){
-        APIResponseDTO api = apiService.viewApiRequests(developerId);
-        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
+    @GetMapping("requestedAPI/{developerId}")
+    public ResponseEntity<ApiResponse<List<APIResponseDTO>>> viewRequestedAPI(@PathVariable UUID developerId){
+        List<APIResponseDTO> api = apiService.viewRequestedAPI(developerId);
+        ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @GetMapping("activeAPI/{developerId}")
+    public ResponseEntity<ApiResponse<List<APIResponseDTO>>> viewActiveAPI(@PathVariable UUID developerId){
+        List<APIResponseDTO> api = apiService.viewActiveAPI(developerId);
+        ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }

@@ -105,4 +105,38 @@ public class APIService {
         API api2 = apiRepository.save(api);
         return new APIResponseDTO(api2.getAPIid(),api2.getAPIType(),api2.getDeveloperId(),api2.getName(),api2.getOrganizationName(),api2.getEmail(),api2.getNumber(),api2.getPurpose(),api2.getDescription(),api2.getStatus());
     }
+
+    public List<APIResponseDTO> viewRequestedAPI(UUID developerId) {
+        List<API> requestedAPIs = apiRepository.findAllByDeveloperIdAndStatus(developerId, "requested");
+        return requestedAPIs.stream()
+                .map(api -> new APIResponseDTO(
+                        api.getAPIid(),
+                        api.getAPIType(),
+                        api.getDeveloperId(),
+                        api.getName(),
+                        api.getOrganizationName(),
+                        api.getEmail(),
+                        api.getNumber(),
+                        api.getPurpose(),
+                        api.getDescription(),
+                        api.getStatus()))
+                .collect(Collectors.toList());
+    }
+
+    public List<APIResponseDTO> viewActiveAPI(UUID developerId) {
+        List<API> requestedAPIs = apiRepository.findAllByDeveloperIdAndStatus(developerId, "active");
+        return requestedAPIs.stream()
+                .map(api -> new APIResponseDTO(
+                        api.getAPIid(),
+                        api.getAPIType(),
+                        api.getDeveloperId(),
+                        api.getName(),
+                        api.getOrganizationName(),
+                        api.getEmail(),
+                        api.getNumber(),
+                        api.getPurpose(),
+                        api.getDescription(),
+                        api.getStatus()))
+                .collect(Collectors.toList());
+    }
 }
