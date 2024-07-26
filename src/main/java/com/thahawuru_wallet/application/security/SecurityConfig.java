@@ -31,7 +31,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/auth/login" ,"/api/v1/auth/register","/api/v1/qr/get/*").permitAll()
+                        .requestMatchers("/api/v1/auth/login" ,"/api/v1/auth/register","/api/v1/auth/apiuser/login" ,"/api/v1/auth/apiuser/register","/api/v1/qr/get/*").permitAll()
                         .anyRequest().authenticated())
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -40,10 +40,10 @@ public class SecurityConfig {
         return http.build();
     }
 
-
+@Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:8081","http://localhost:8082","http://localhost:9000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:8081","http://localhost:8082","http://localhost:9000","http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

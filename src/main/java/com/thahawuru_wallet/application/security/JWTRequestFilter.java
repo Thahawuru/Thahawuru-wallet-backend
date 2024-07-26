@@ -2,7 +2,9 @@ package com.thahawuru_wallet.application.security;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
 
+import com.thahawuru_wallet.application.entity.ApiUser;
 import com.thahawuru_wallet.application.entity.User;
+import com.thahawuru_wallet.application.repository.ApiUserRepository;
 import com.thahawuru_wallet.application.repository.UserRepository;
 import com.thahawuru_wallet.application.service.JWTService;
 import jakarta.servlet.FilterChain;
@@ -30,6 +32,9 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ApiUserRepository apiUserRepository;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String tokenHeader = request.getHeader("Authorization");
@@ -37,11 +42,23 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             String token = tokenHeader.substring(7);
             try{
                 UUID userid=jwtService.getUserId(token);
+                String userType = jwtService.getUserType(token);
+
+                if("user".equals(userType)){
+
                 Optional<User> user =userRepository.findById(userid);
                 if(user.isPresent()){
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.get(),null,new ArrayList<>());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+                }else if("apiUser".equals(userType)){
+                    Optional<ApiUser> user =apiUserRepository.findById(userid);
+                    if(user.isPresent()){
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.get(),null,new ArrayList<>());
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
                 }
 
             }catch(JWTDecodeException ex){

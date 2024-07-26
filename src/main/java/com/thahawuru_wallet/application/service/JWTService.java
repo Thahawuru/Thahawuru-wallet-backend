@@ -2,6 +2,8 @@ package com.thahawuru_wallet.application.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.thahawuru_wallet.application.entity.ApiUser;
 import com.thahawuru_wallet.application.entity.User;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,18 +32,40 @@ public class JWTService {
     }
 
 
-    public String generateJWT(User user){
+    public String generateJWT(User user,String userType){
         return JWT.create()
+                .withSubject(userType)
+                .withClaim(USERNAME_KEY,user.getId().toString())
+                .withIssuer(issuer)
+                .withExpiresAt(new Date(System.currentTimeMillis()+1000*expiaryinseconds))
+                .sign(algorithm);
+    }
+    public String generateJWTForApiUser(ApiUser user, String userType){
+        return JWT.create()
+                .withSubject(userType)
                 .withClaim(USERNAME_KEY,user.getId().toString())
                 .withIssuer(issuer)
                 .withExpiresAt(new Date(System.currentTimeMillis()+1000*expiaryinseconds))
                 .sign(algorithm);
     }
 
+
     public UUID getUserId(String token){
-        return UUID.fromString(JWT.decode(token).getClaim(USERNAME_KEY).asString());
+        try {
+            String userId = JWT.decode(token).getClaim(USERNAME_KEY).asString();
+            return UUID.fromString(userId);
+        } catch (JWTDecodeException e) {
+            throw new JWTDecodeException("Invalid token");
+        }
     }
 
+    public String getUserType(String token) {
+        try {
+            return JWT.decode(token).getSubject();
+        } catch (JWTDecodeException e) {
+            throw new JWTDecodeException("Invalid token");
+        }
+    }
 
 
 
