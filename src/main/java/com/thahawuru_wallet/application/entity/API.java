@@ -55,6 +55,6 @@ public class API {
     @Column(nullable = false)
     private String APIkey;
 
-    @Column(nullable = false)
-    private String Status;
+    @Column(nullable = false , name = "status")
+    private String status;
 }
