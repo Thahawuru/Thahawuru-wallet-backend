@@ -54,4 +54,7 @@ public class API {
 
     @Column(nullable = false)
     private String APIkey;
+
+    @Column(nullable = false)
+    private String Status;
 }

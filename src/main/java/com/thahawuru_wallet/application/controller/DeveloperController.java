@@ -27,11 +27,10 @@ public class DeveloperController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<ApiResponse<APIResponseDTO>> viewApiRequest(@PathVariable UUID apiId){
-        APIResponseDTO api = apiService.viewApiRequest(apiId);
+    @GetMapping("/{developerId}")
+    public ResponseEntity<ApiResponse<APIResponseDTO>> viewApiRequests(@PathVariable UUID developerId){
+        APIResponseDTO api = apiService.viewApiRequests(developerId);
         ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-
-
 }

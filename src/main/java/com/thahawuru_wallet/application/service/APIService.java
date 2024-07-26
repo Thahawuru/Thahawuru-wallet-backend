@@ -9,7 +9,9 @@ import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class APIService {
@@ -31,15 +33,76 @@ public class APIService {
             api1.setNumber(api.getNumber());
             api1.setPurpose(api.getNumber());
             api1.setDescription(api.getDescription());
+            api1.setStatus("request"); //three status levels Request , Pending and Active
 
             API api2 = apiRepository.save(api1);
 
-            return new APIResponseDTO(api2.getAPIid(),api2.getAPIType(),api2.getDeveloperId(),api2.getName(),api2.getOrganizationName(),api2.getEmail(),api2.getNumber(),api2.getPurpose(),api2.getDescription());
+            return new APIResponseDTO(api2.getAPIid(),api2.getAPIType(),api2.getDeveloperId(),api2.getName(),api2.getOrganizationName(),api2.getEmail(),api2.getNumber(),api2.getPurpose(),api2.getDescription(),api2.getStatus());
         }
     }
 
-    public APIResponseDTO viewApiRequest(@PathVariable UUID apiID){
-        API api = apiRepository.findById(apiID).orElseThrow(()->new UserNotFoundException("api request not Found!"));
-        return new APIResponseDTO(api.getAPIid(),api.getAPIType(),api.getDeveloperId(),api.getName(),api.getOrganizationName(),api.getEmail(),api.getNumber(),api.getPurpose(),api.getDescription());
+    public List<APIResponseDTO> viewAllAPIReqeusts(){
+        return apiRepository.findAll().stream()
+                .filter(api -> "request".equals(api.getStatus()))
+                .map(api -> new APIResponseDTO(
+                api.getAPIid(),
+                api.getAPIType(),
+                api.getDeveloperId(),
+                api.getName(),
+                api.getOrganizationName(),
+                api.getEmail(),
+                api.getNumber(),
+                api.getPurpose(),
+                api.getDescription(),
+                api.getStatus()
+        )).collect(Collectors.toList());
+    }
+
+    public List<APIResponseDTO> viewPendingAPIReqeusts(){
+        return apiRepository.findAll().stream()
+                .filter(api -> "pending".equals(api.getStatus()))
+                .map(api -> new APIResponseDTO(
+                        api.getAPIid(),
+                        api.getAPIType(),
+                        api.getDeveloperId(),
+                        api.getName(),
+                        api.getOrganizationName(),
+                        api.getEmail(),
+                        api.getNumber(),
+                        api.getPurpose(),
+                        api.getDescription(),
+                        api.getStatus()
+                )).collect(Collectors.toList());
+    }
+
+    public List<APIResponseDTO> viewActiveAPIReqeusts(){
+        return apiRepository.findAll().stream()
+                .filter(api -> "active".equals(api.getStatus()))
+                .map(api -> new APIResponseDTO(
+                        api.getAPIid(),
+                        api.getAPIType(),
+                        api.getDeveloperId(),
+                        api.getName(),
+                        api.getOrganizationName(),
+                        api.getEmail(),
+                        api.getNumber(),
+                        api.getPurpose(),
+                        api.getDescription(),
+                        api.getStatus()
+                )).collect(Collectors.toList());
+    }
+
+    public APIResponseDTO acceptRequest(UUID apiId){
+        API api = apiRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
+        api.setStatus("pending");
+        API api2 = apiRepository.save(api);
+        return new APIResponseDTO(api2.getAPIid(),api2.getAPIType(),api2.getDeveloperId(),api2.getName(),api2.getOrganizationName(),api2.getEmail(),api2.getNumber(),api2.getPurpose(),api2.getDescription(),api2.getStatus());
+    }
+
+    public APIResponseDTO declineRequest(UUID apiId){
+        API api = apiRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
+        api.setStatus("declined");
+        API api2 = apiRepository.save(api);
+        return new APIResponseDTO(api2.getAPIid(),api2.getAPIType(),api2.getDeveloperId(),api2.getName(),api2.getOrganizationName(),api2.getEmail(),api2.getNumber(),api2.getPurpose(),api2.getDescription(),api2.getStatus());
     }
 }
