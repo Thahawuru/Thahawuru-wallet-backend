@@ -3,6 +3,7 @@ package com.thahawuru_wallet.application.service;
 import com.thahawuru_wallet.application.dto.request.ApiKeyRequestDTO;
 import com.thahawuru_wallet.application.dto.response.ApiKeyResponseDTO;
 import com.thahawuru_wallet.application.entity.ApiKey;
+import com.thahawuru_wallet.application.entity.ApiStatus;
 import com.thahawuru_wallet.application.entity.ApiUser;
 import com.thahawuru_wallet.application.entity.User;
 import com.thahawuru_wallet.application.repository.ApiKeyRepository;
@@ -49,7 +50,7 @@ public class ApiKeyService {
         apiKeyEntity.setName(keydetails.getName());
         apiKeyEntity.setType(keydetails.getType());
         apiKeyEntity.setUser(user);
-        apiKeyEntity.setActive(true);
+        apiKeyEntity.setApistatus(ApiStatus.REQUEST);
         apiKeyEntity.setCreatedAt(new Date());
         apiKeyRepository.save(apiKeyEntity);
 

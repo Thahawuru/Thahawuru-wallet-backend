@@ -11,6 +11,8 @@ import org.hibernate.annotations.GenericGenerator;
 import java.util.Date;
 import java.util.UUID;
 
+
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -41,8 +43,9 @@ public class ApiKey {
     @Column(nullable = false ,updatable = false)
     private Date createdAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Boolean active;
+    private ApiStatus apistatus;
 
     @ManyToOne
     @JoinColumn(name = "api_user_id")
