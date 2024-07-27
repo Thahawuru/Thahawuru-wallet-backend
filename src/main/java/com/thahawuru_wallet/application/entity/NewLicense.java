@@ -23,8 +23,8 @@ public class NewLicense {
     @Column(name = "license_number", nullable = false, unique = true)
     private String licenseNumber;
 
-    @Column(name = "identity_id", nullable = false)
-    private String identityId;
+    @Column(name = "identity_number", nullable = false)
+    private String identityNumber;
 
     @Column(name = "name")
     private String name;

@@ -57,7 +57,4 @@ public class ApiUser {
     @NotBlank(message = "Password cannot be blank!")
     @Column(nullable = false)
     private String password;
-
-//    @Column(nullable = false)
-    private String apikey;
 }
