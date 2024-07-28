@@ -25,7 +25,6 @@ public class AdminService {
             newmaintainer.setEmail(maintainer.getEmail());
             newmaintainer.setPhoneNumber(maintainer.getPhoneNumber());
             newmaintainer.setWhatsappNumber(maintainer.getWhatsappNumber());
-            newmaintainer.setPassword(maintainer.getPassword());
             newmaintainer.setStatus("Active");
 
             Maintainer newMaintainer = maintainerRepository.save(newmaintainer);

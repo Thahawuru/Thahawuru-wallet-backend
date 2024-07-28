@@ -5,8 +5,8 @@ import com.thahawuru_wallet.application.dto.response.AdminResponseDTO;
 import com.thahawuru_wallet.application.dto.response.ApiResponse;
 import com.thahawuru_wallet.application.dto.response.MaintainerResponseDTO;
 import com.thahawuru_wallet.application.entity.Maintainer;
-import com.thahawuru_wallet.application.service.APIService;
 import com.thahawuru_wallet.application.service.AdminService;
+import com.thahawuru_wallet.application.service.ApiService;
 import com.thahawuru_wallet.application.service.MaintainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,14 +17,14 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/maintainer")
+@RequestMapping("/api/admin")
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
 
     @Autowired
-    private APIService apiService;
+    private ApiService apiService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<MaintainerResponseDTO>> createMaintainer(@RequestBody Maintainer maintainer){
@@ -80,10 +80,5 @@ public class AdminController {
         ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-
-
-
-
-
-
 }
+

@@ -50,12 +50,13 @@ public class ApiUser {
     @Column(nullable = false)
     private String description;
 
-
-
     @Column(nullable = false,columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean verified;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(nullable = false)
+    private String status;
 }
