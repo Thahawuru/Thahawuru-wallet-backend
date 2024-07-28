@@ -16,4 +16,5 @@ public class APIResponseDTO {
     private String number;
     private String purpose;
     private String description;
+    private String status;
 }
