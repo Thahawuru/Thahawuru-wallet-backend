@@ -24,9 +24,10 @@ public class ApiSecurityConfig {
     @Bean
     public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http, ApiRequestFilter apiRequestFilter) throws Exception {
         http
-                .securityMatcher("/api/v1/qr/get/**")
+                .securityMatcher("/api/v1/get/**")
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll())
+                        .requestMatchers("/api/v1/qr/get/**").permitAll()
+                        .anyRequest().authenticated())
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(withDefaults());

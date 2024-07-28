@@ -80,10 +80,4 @@ public class AdminController {
         ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-
-
-
-
-
-
 }
