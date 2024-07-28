@@ -5,9 +5,7 @@ import com.thahawuru_wallet.application.entity.ApiUser;
 import com.thahawuru_wallet.application.exception.UserNotFoundException;
 import com.thahawuru_wallet.application.repository.ApiUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +16,7 @@ public class ApiService {
 
     @Autowired
     private ApiUserRepository apiUserRepository;
+
     public List<APIResponseDTO> viewAllAPIReqeusts(){
         return apiUserRepository.findAll().stream()
                 .filter(api -> "request".equals(api.getStatus()))
