@@ -41,7 +41,6 @@ public class ApiUser {
     @Column(nullable = false)
     private String organizationName;
 
-
     @Column(nullable = false)
     private String number;
 

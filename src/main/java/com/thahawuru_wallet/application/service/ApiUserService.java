@@ -42,7 +42,7 @@ public class ApiUserService {
         apiuser.setPurpose(api.getPurpose());
         apiuser.setDescription(api.getDescription());
         apiuser.setStatus("requested");
-
+      
         ApiUser savedApiUser = apiRepository.save(apiuser);
 
         return new APIResponseDTO(
