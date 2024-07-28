@@ -30,7 +30,7 @@ public class ApiUser {
     private UUID id;
 
 //    @Column(nullable = false)
-    private String APIType;
+//    private String APIType;
 
 //    @Column(nullable = false)
 //    private UUID developerId;
@@ -41,8 +41,6 @@ public class ApiUser {
     @Column(nullable = false)
     private String organizationName;
 
-    @Column(nullable = false,unique = true)
-    private String email;
 
     @Column(nullable = false)
     private String number;
@@ -53,8 +51,13 @@ public class ApiUser {
     @Column(nullable = false)
     private String description;
 
-    @NotNull(message = "Password is required")
-    @NotBlank(message = "Password cannot be blank!")
+    @Column(nullable = false,columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean verified;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(nullable = false)
-    private String password;
+    private String status;
 }

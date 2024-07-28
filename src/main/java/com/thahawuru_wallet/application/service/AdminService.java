@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.UUID;
 
 @Service
-public class MaintainerService {
+public class AdminService {
 
     @Autowired
     private MaintainerRepository maintainerRepository;

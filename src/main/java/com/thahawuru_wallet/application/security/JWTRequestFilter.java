@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -44,21 +45,23 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 UUID userid=jwtService.getUserId(token);
                 String userType = jwtService.getUserType(token);
 
-                if("user".equals(userType)){
+//                if("user".equals(userType)){
 
                 Optional<User> user =userRepository.findById(userid);
                 if(user.isPresent()){
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.get(),null,new ArrayList<>());
+                    UserDetails userDetails = user.get();
+                    System.out.println("USER AUTHENTICATED: " + userDetails.getUsername() + " WITH ROLES " + userDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
-                }else if("apiUser".equals(userType)){
-                    Optional<ApiUser> user =apiUserRepository.findById(userid);
-                    if(user.isPresent()){
-                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.get(),null,new ArrayList<>());
-                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-                    }
+//                }
+//                }else if("apiUser".equals(userType)){
+//                    Optional<ApiUser> user =apiUserRepository.findById(userid);
+//                    if(user.isPresent()){
+//                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.get(),null,new ArrayList<>());
+//                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//                        SecurityContextHolder.getContext().setAuthentication(authentication);
+//                    }
                 }
 
             }catch(JWTDecodeException ex){

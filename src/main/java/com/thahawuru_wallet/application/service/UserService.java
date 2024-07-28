@@ -21,28 +21,28 @@ public class UserService {
 
     public List<UserResponseDTO> allUsers(){
         return userRepository.findAll().stream()
-                .map(user->new UserResponseDTO(user.getId(),user.getEmail(),user.getNic()))
+                .map(user->new UserResponseDTO(user.getId(),user.getEmail(),user.getRole()))
                 .collect(Collectors.toList());
     }
 
     public UserResponseDTO getUser(UUID userid){
         User user =  userRepository.findById(userid).orElseThrow(()-> new UserNotFoundException("User Not Found!"));
-        return new UserResponseDTO(user.getId(),user.getEmail(),user.getNic());
+        return new UserResponseDTO(user.getId(),user.getEmail(),user.getRole());
     }
 
-    public UserResponseDTO createUser( User user){
-        if(userRepository.findUserByEmail(user.getEmail()).isPresent()){
-            throw new IllegalStateException("email already exists!");
-        }else{
-            User newuser = new User();
-            newuser.setEmail(user.getEmail());
-            newuser.setPassword(encryptionService.encryptPassword(user.getPassword()));
-            newuser.setNic(user.getNic());
-            User newUser=userRepository.save(newuser);
-
-            return new UserResponseDTO(newUser.getId(),newUser.getEmail(),newUser.getNic());
-        }
-    }
+//    public UserResponseDTO createUser( User user){
+//        if(userRepository.findUserByEmail(user.getEmail()).isPresent()){
+//            throw new IllegalStateException("email already exists!");
+//        }else{
+//            User newuser = new User();
+//            newuser.setEmail(user.getEmail());
+//            newuser.setPassword(encryptionService.encryptPassword(user.getPassword()));
+//            newuser.setNic(user.getNic());
+//            User newUser=userRepository.save(newuser);
+//
+//            return new UserResponseDTO(newUser.getId(),newUser.getEmail(),newUser.getNic());
+//        }
+//    }
 
 
 
