@@ -24,10 +24,8 @@ public class ApiService {
                 .filter(api -> "request".equals(api.getStatus()))
                 .map(api -> new APIResponseDTO(
                         api.getId(),
-                        api.getAPIType(),
                         api.getName(),
                         api.getOrganizationName(),
-                        api.getEmail(),
                         api.getNumber(),
                         api.getPurpose(),
                         api.getDescription(),
@@ -40,10 +38,8 @@ public class ApiService {
                 .filter(api -> "pending".equals(api.getStatus()))
                 .map(api -> new APIResponseDTO(
                         api.getId(),
-                        api.getAPIType(),
                         api.getName(),
                         api.getOrganizationName(),
-                        api.getEmail(),
                         api.getNumber(),
                         api.getPurpose(),
                         api.getDescription(),
@@ -56,10 +52,8 @@ public class ApiService {
                 .filter(api -> "active".equals(api.getStatus()))
                 .map(api -> new APIResponseDTO(
                         api.getId(),
-                        api.getAPIType(),
                         api.getName(),
                         api.getOrganizationName(),
-                        api.getEmail(),
                         api.getNumber(),
                         api.getPurpose(),
                         api.getDescription(),
@@ -71,29 +65,41 @@ public class ApiService {
         ApiUser api = apiUserRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
         api.setStatus("pending");
         ApiUser api2 = apiUserRepository.save(api);
-        return new APIResponseDTO(api2.getId(),api2.getAPIType(),api2.getName(),api2.getOrganizationName(),api2.getEmail(),api2.getNumber(),api2.getPurpose(),api2.getDescription(),api2.getStatus());
+        return new APIResponseDTO(api.getId(),
+                api.getName(),
+                api.getOrganizationName(),
+                api.getNumber(),
+                api.getPurpose(),
+                api.getDescription(),
+                api.getStatus());
     }
 
     public APIResponseDTO declineRequest(UUID apiId){
         ApiUser api = apiUserRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
         api.setStatus("declined");
         ApiUser api2 = apiUserRepository.save(api);
-        return new APIResponseDTO(api2.getId(),api2.getAPIType(),api2.getName(),api2.getOrganizationName(),api2.getEmail(),api2.getNumber(),api2.getPurpose(),api2.getDescription(),api2.getStatus());
+        return new APIResponseDTO(api.getId(),
+                api.getName(),
+                api.getOrganizationName(),
+                api.getNumber(),
+                api.getPurpose(),
+                api.getDescription(),
+                api.getStatus());
     }
 
-    public List<APIResponseDTO> viewRequestedAPI(UUID developerId) {
-        List<ApiUser> requestedAPIs = apiUserRepository.findAllByDeveloperIdAndStatus(developerId, "requested");
-        return requestedAPIs.stream()
-                .map(api -> new APIResponseDTO(
-                        api.getId(),
-                        api.getAPIType(),
-                        api.getName(),
-                        api.getOrganizationName(),
-                        api.getEmail(),
-                        api.getNumber(),
-                        api.getPurpose(),
-                        api.getDescription(),
-                        api.getStatus()))
-                .collect(Collectors.toList());
-    }
+//    public List<APIResponseDTO> viewRequestedAPI(UUID developerId) {
+//        List<ApiUser> requestedAPIs = apiUserRepository.findAllByDeveloperIdAndStatus(developerId, "requested");
+//        return requestedAPIs.stream()
+//                .map(api -> new APIResponseDTO(
+//                        api.getId(),
+//                        api.getName(),
+//                        api.getOrganizationName(),
+//                        api.getNumber(),
+//                        api.getPurpose(),
+//                        api.getDescription(),
+//                        api.isVerified(),
+//                        api.getUser(),
+//                        api.getStatus()))
+//                .collect(Collectors.toList());
+//    }
 }

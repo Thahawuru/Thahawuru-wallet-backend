@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/maintainer")
+@RequestMapping("/api/admin")
 public class AdminController {
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.thahawuru_wallet.application.dto.response;
 
+import com.thahawuru_wallet.application.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,5 @@ public class APIResponseDTO {
     private String number;
     private String purpose;
     private String description;
+    private String status;
 }

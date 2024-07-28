@@ -41,6 +41,7 @@ public class ApiUserService {
         apiuser.setNumber(api.getNumber());
         apiuser.setPurpose(api.getPurpose());
         apiuser.setDescription(api.getDescription());
+        apiuser.setStatus("requested");
 
         ApiUser savedApiUser = apiRepository.save(apiuser);
 
@@ -50,13 +51,14 @@ public class ApiUserService {
                 savedApiUser.getOrganizationName(),
                 savedApiUser.getNumber(),
                 savedApiUser.getPurpose(),
-                savedApiUser.getDescription()
+                savedApiUser.getDescription(),
+                savedApiUser.getStatus()
         );
     }
 
 
     public APIResponseDTO viewApiRequest(@PathVariable UUID apiID){
         ApiUser api = apiRepository.findById(apiID).orElseThrow(()->new UserNotFoundException("api request not Found!"));
-        return new APIResponseDTO(api.getId(),api.getName(),api.getOrganizationName(),api.getNumber(),api.getPurpose(),api.getDescription());
+        return new APIResponseDTO(api.getId(),api.getName(),api.getOrganizationName(),api.getNumber(),api.getPurpose(),api.getDescription(),api.getStatus());
     }
 }
