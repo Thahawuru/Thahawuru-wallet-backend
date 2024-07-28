@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApiKeyRequestDTO {
+
     private String name;
     private String type;
 }

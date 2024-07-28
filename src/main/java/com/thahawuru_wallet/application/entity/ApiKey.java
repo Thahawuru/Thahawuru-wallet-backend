@@ -49,5 +49,5 @@ public class ApiKey {
 
     @ManyToOne
     @JoinColumn(name = "api_user_id")
-    private ApiUser user;
+    private ApiUser apiuser;
 }

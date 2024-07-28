@@ -18,17 +18,17 @@ public class DeveloperController {
     @Autowired
     private ApiUserService apiService;
 
-    @PostMapping ("/apiRequest")
-    public ResponseEntity<ApiResponse<APIResponseDTO>> createAPI(@RequestBody ApiUser api){
-        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),apiService.createApi(api),"created");
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    public ResponseEntity<ApiResponse<APIResponseDTO>> viewApiRequest(@PathVariable UUID apiId){
-        APIResponseDTO api = apiService.viewApiRequest(apiId);
-        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
-        return new ResponseEntity<>(response,HttpStatus.OK);
-    }
+//    @PostMapping ("/apiRequest")
+//    public ResponseEntity<ApiResponse<APIResponseDTO>> createAPI(@RequestBody ApiUser api){
+//        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),apiService.(api),"created");
+//        return new ResponseEntity<>(response, HttpStatus.CREATED);
+//    }
+//
+//    public ResponseEntity<ApiResponse<APIResponseDTO>> viewApiRequest(@PathVariable UUID apiId){
+//        APIResponseDTO api = apiService.viewApiRequest(apiId);
+//        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
+//        return new ResponseEntity<>(response,HttpStatus.OK);
+//    }
 
 
 }
