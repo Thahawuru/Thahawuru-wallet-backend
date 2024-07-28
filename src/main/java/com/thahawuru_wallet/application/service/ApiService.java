@@ -18,7 +18,6 @@ public class ApiService {
 
     @Autowired
     private ApiUserRepository apiUserRepository;
-
     public List<APIResponseDTO> viewAllAPIReqeusts(){
         return apiUserRepository.findAll().stream()
                 .filter(api -> "request".equals(api.getStatus()))

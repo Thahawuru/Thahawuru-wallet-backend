@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface UpdatedLicenseRepository extends JpaRepository<UpdatedLicense,Long> {
 }
 
-
+//
 //INSERT INTO updated_Licenses (
 //        license_number,
 //        identity_number,

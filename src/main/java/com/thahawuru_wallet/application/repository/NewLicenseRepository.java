@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface NewLicenseRepository extends JpaRepository<NewLicense,Long> {
 }
 
-
+//
 //INSERT INTO new_licenses (
 //        license_number,
 //        identity_number,
