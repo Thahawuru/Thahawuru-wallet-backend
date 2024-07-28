@@ -30,8 +30,9 @@ public class ApiRequestFilter extends OncePerRequestFilter {
                     System.out.println("wrong key");
                     throw new RequestForbiddenException("Request cant be completed!");
                 }
-
+                System.out.println("good key AUTHOEIZED");
             } catch (Exception ex) {
+
                 throw new RequestForbiddenException("No valid token found");
             }
         }

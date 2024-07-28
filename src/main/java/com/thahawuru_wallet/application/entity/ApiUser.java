@@ -30,7 +30,7 @@ public class ApiUser {
     private UUID id;
 
 //    @Column(nullable = false)
-    private String APIType;
+//    private String APIType;
 
 //    @Column(nullable = false)
 //    private UUID developerId;
@@ -57,4 +57,7 @@ public class ApiUser {
     @NotBlank(message = "Password cannot be blank!")
     @Column(nullable = false)
     private String password;
+
+//    @Column(nullable = false)
+    private String apikey;
 }

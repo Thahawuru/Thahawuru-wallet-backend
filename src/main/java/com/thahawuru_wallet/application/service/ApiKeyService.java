@@ -32,14 +32,14 @@ public class ApiKeyService {
     private static final SecureRandom secureRandom = new SecureRandom();
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
 
-    public String generateAPIKey(ApiUser user, ApiKeyRequestDTO keydetails) {
+    public String generateAPIKey(ApiUser apiuser, ApiKeyRequestDTO keydetails) {
         // Generate random bytes
         byte[] randomBytes = new byte[32];
         secureRandom.nextBytes(randomBytes);
         String randomKeyPart = base64Encoder.encodeToString(randomBytes);
 
         // Create HMAC SHA256 hash of user ID with the secret key
-        String signedPart = hmacSha256(user.getId().toString(), secret);
+        String signedPart = hmacSha256(apiuser.getId().toString(), secret);
 
         // Concatenate both parts
         String apiKey = randomKeyPart + "." + signedPart;
@@ -49,7 +49,7 @@ public class ApiKeyService {
         apiKeyEntity.setApiKey(apiKey);
         apiKeyEntity.setName(keydetails.getName());
         apiKeyEntity.setType(keydetails.getType());
-        apiKeyEntity.setUser(user);
+        apiKeyEntity.setApiuser(apiuser);
         apiKeyEntity.setApistatus(ApiStatus.REQUEST);
         apiKeyEntity.setCreatedAt(new Date());
         apiKeyRepository.save(apiKeyEntity);
@@ -79,7 +79,7 @@ public class ApiKeyService {
 
         Optional<ApiKey> apiKeyEntity = apiKeyRepository.findByApiKey(apiKey);
         if (apiKeyEntity.isPresent()) {
-            String userId = apiKeyEntity.get().getUser().getId().toString();
+            String userId = apiKeyEntity.get().getApiuser().getId().toString();
             return hmacSha256(userId, secret).equals(signedPart);
         }
         return false;
@@ -87,7 +87,7 @@ public class ApiKeyService {
 
 
     public List<ApiKeyResponseDTO> getUserApiKeys(ApiUser user){
-        return apiKeyRepository.findByUser(user).stream()
+        return apiKeyRepository.findByApiuser(user).stream()
                 .map(k->new ApiKeyResponseDTO(k.getName(),k.getType(),k.getApiKey())).collect(Collectors.toList());
     }
 //    public User getUserFromAPIKey(String apiKey) {

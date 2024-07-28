@@ -12,5 +12,5 @@ public interface ApiKeyRepository extends JpaRepository <ApiKey, UUID>{
 //    Optional<ApiKey> findByApikey(String apikey);
 
     Optional<ApiKey> findByApiKey(String apiKey);
-    List<ApiKey> findByUser(ApiUser user);
+    List<ApiKey> findByApiuser(ApiUser user);
 }

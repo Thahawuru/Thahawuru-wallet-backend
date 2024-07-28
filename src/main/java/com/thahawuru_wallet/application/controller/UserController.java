@@ -39,11 +39,11 @@ public class UserController {
     }
 
 
-    @PostMapping
-    public ResponseEntity<ApiResponse<UserResponseDTO>> createUser( @RequestBody User user){
-        ApiResponse<UserResponseDTO> response  = new ApiResponse<>(HttpStatus.CREATED.value(),userService.createUser(user),"created");
-        return new ResponseEntity<>(response,HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<ApiResponse<UserResponseDTO>> createUser( @RequestBody User user){
+//        ApiResponse<UserResponseDTO> response  = new ApiResponse<>(HttpStatus.CREATED.value(),userService.createUser(user),"created");
+//        return new ResponseEntity<>(response,HttpStatus.CREATED);
+//    }
 //    @PostMapping
 //    public ResponseEntity<String> createUser(@RequestBody Map<String,String> payload ){
 //        return new ResponseEntity<String>(userService.createUser(payload.get("email"),payload.get("password")),HttpStatus.OK);

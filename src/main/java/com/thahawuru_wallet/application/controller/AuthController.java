@@ -1,5 +1,6 @@
 package com.thahawuru_wallet.application.controller;
 
+import com.thahawuru_wallet.application.dto.request.WalletRegisterDTO;
 import com.thahawuru_wallet.application.dto.response.*;
 import com.thahawuru_wallet.application.dto.request.LoginRequestDTO;
 import com.thahawuru_wallet.application.entity.ApiUser;
@@ -29,32 +30,49 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponseDTO>> loginUser(@Valid @RequestBody LoginRequestDTO user){
-        ApiResponse<LoginResponseDTO> response  = new ApiResponse<>(HttpStatus.OK.value(),authService.login(user),"success");
+        ApiResponse<LoginResponseDTO> response  = new ApiResponse<>(HttpStatus.OK.value(),authService.userlogin(user),"success");
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<ApiResponse<LoginResponseDTO>> loginAdmin(@Valid @RequestBody LoginRequestDTO user){
+        ApiResponse<LoginResponseDTO> response  = new ApiResponse<>(HttpStatus.OK.value(),authService.adminlogin(user),"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @PostMapping("/apiuser/login")
-    public ResponseEntity<ApiResponse<ApiUserLoginResponseDTO>> loginApiUser(@Valid @RequestBody LoginRequestDTO user){
-        ApiResponse<ApiUserLoginResponseDTO> response  = new ApiResponse<>(HttpStatus.OK.value(),authService.apiUserLogin(user),"success");
+    public ResponseEntity<ApiResponse<LoginResponseDTO>> loginApiUser(@Valid @RequestBody LoginRequestDTO user){
+        ApiResponse<LoginResponseDTO> response  = new ApiResponse<>(HttpStatus.OK.value(),authService.apiuserlogin(user),"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @PostMapping ("/apiuser/register")
-    public ResponseEntity<ApiResponse<APIResponseDTO>> createAPI(@RequestBody ApiUser api){
-        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),apiUserService.createApi(api),"created");
+    public ResponseEntity<ApiResponse<UserResponseDTO>> registerapiUser(@Valid @RequestBody User user){
+        ApiResponse<UserResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),authService.registerApiUser(user),"created");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+    @PostMapping ("/admin/register")
+    public ResponseEntity<ApiResponse<UserResponseDTO>> registeradminUser(@Valid @RequestBody User user){
+        ApiResponse<UserResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),authService.registerAdminUser(user),"created");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @PostMapping ("/maintainer/register")
+    public ResponseEntity<ApiResponse<UserResponseDTO>> registerMaintainerUser(@Valid @RequestBody User user){
+        ApiResponse<UserResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),authService.registerMaintainerUser(user),"created");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<UserResponseDTO>> registerUser(@Valid @RequestBody User user){
-        System.out.println(user.getNic()+"user");
+    public ResponseEntity<ApiResponse<UserResponseDTO>> registerUser(@Valid @RequestBody WalletRegisterDTO user){
         ApiResponse<UserResponseDTO> response  = new ApiResponse<>(HttpStatus.CREATED.value(),authService.registerUser(user),"created");
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<UserResponseDTO>> getme(@AuthenticationPrincipal User user){
-        ApiResponse<UserResponseDTO> response =new ApiResponse<>(HttpStatus.OK.value(),new UserResponseDTO(user.getId(), user.getEmail(), user.getNic()),"success");
+        ApiResponse<UserResponseDTO> response =new ApiResponse<>(HttpStatus.OK.value(),new UserResponseDTO(user.getId(), user.getEmail(), user.getRole()),"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 

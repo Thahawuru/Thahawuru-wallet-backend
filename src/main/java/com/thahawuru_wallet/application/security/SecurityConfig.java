@@ -27,11 +27,18 @@ public class SecurityConfig {
     @Autowired
     JWTRequestFilter jwtRequestFilter;
 
+    @Autowired
+    ApiRequestFilter apiRequestFilter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/auth/login" ,"/api/v1/auth/register","/api/v1/auth/apiuser/login" ,"/api/v1/auth/apiuser/register","/api/v1/qr/get/*").permitAll()
+                        .requestMatchers("/api/v1/auth/**","/api/v1/qr/get/**").permitAll()
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/maintainer/**").hasAnyRole("MAINTAINER","ADMIN")
+                        .requestMatchers("/api/v1/users/**").hasAnyRole("ADMIN","MAINTAINER","USER")
+                        .requestMatchers("/api/v1/apiuser/**","/api/v1/apikey/**").hasAnyRole("APIUSER","ADMIN","MAINTAINER")
                         .anyRequest().authenticated())
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -43,7 +50,7 @@ public class SecurityConfig {
 @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:8081","http://localhost:8082","http://localhost:9000","http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:8081","http://localhost:8082","http://localhost:9000","http://localhost:6000","http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

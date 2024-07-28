@@ -9,14 +9,15 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
 @Entity
-@Table(name = "maintainers")
-public class Maintainer {
+@Table(name = "wallet_users")
+public class WalletUser {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -24,25 +25,16 @@ public class Maintainer {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "maintainer_id", updatable = false, nullable = false)
+    @Column(name = "wallet_user_id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(nullable = false)
-    private String name;
-
     @Column(nullable = false,unique = true)
-    private String email;
+    private String nic;
 
-    @Column(nullable = false)
-    private String phoneNumber;
 
-    @Column(nullable = false)
-    private String whatsappNumber;
-
-    @Column
-    private String status;
+    private String phoneno;
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User userid;
+    private User user;
 }
