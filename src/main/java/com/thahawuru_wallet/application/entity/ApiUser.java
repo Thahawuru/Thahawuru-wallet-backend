@@ -58,6 +58,6 @@ public class ApiUser {
     @Column(nullable = false)
     private String password;
 
-//    @Column(nullable = false)
-    private String apikey;
+    @Column(nullable = false)
+    private String status;
 }

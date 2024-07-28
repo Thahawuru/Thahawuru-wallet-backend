@@ -38,12 +38,12 @@ public class ApiUserService {
 
             ApiUser api2 = apiRepository.save(api1);
 
-            return new APIResponseDTO(api2.getId(),api2.getAPIType(),api2.getName(),api2.getOrganizationName(),api2.getEmail(),api2.getNumber(),api2.getPurpose(),api2.getDescription());
+            return new APIResponseDTO(api2.getId(),api2.getAPIType(),api2.getName(),api2.getOrganizationName(),api2.getEmail(),api2.getNumber(),api2.getPurpose(),api2.getDescription(),api2.getStatus());
         }
     }
 
     public APIResponseDTO viewApiRequest(@PathVariable UUID apiID){
         ApiUser api = apiRepository.findById(apiID).orElseThrow(()->new UserNotFoundException("api request not Found!"));
-        return new APIResponseDTO(api.getId(),api.getAPIType(),api.getName(),api.getOrganizationName(),api.getEmail(),api.getNumber(),api.getPurpose(),api.getDescription());
+        return new APIResponseDTO(api.getId(),api.getAPIType(),api.getName(),api.getOrganizationName(),api.getEmail(),api.getNumber(),api.getPurpose(),api.getDescription(),api.getStatus());
     }
 }
