@@ -29,8 +29,8 @@ public class AuthController {
     ApiUserService apiUserService;
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<LoginResponseDTO>> loginUser(@Valid @RequestBody LoginRequestDTO user){
-        ApiResponse<LoginResponseDTO> response  = new ApiResponse<>(HttpStatus.OK.value(),authService.userlogin(user),"success");
+    public ResponseEntity<ApiResponse<WalletUserLoginResponseDTO>> loginUser(@Valid @RequestBody LoginRequestDTO user){
+        ApiResponse<WalletUserLoginResponseDTO> response  = new ApiResponse<>(HttpStatus.OK.value(),authService.userlogin(user),"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 

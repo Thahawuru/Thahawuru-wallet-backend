@@ -1,6 +1,6 @@
 package com.thahawuru_wallet.application.dto.response;
 
-import com.thahawuru_wallet.application.entity.Roles;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +10,10 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WalletUserResponseDTO {
-    private UUID id;
-    private String email;
-    private Roles role;
+public class WalletUserDetailsResponseDTO {
+    private UUID userid;
     private UUID walletid;
+    private String email;
     private String nic;
+    private BlockchainResponseDTO userDetails;
 }

@@ -2,10 +2,7 @@ package com.thahawuru_wallet.application.service;
 
 import com.thahawuru_wallet.application.dto.request.LoginRequestDTO;
 import com.thahawuru_wallet.application.dto.request.WalletRegisterDTO;
-import com.thahawuru_wallet.application.dto.response.APIResponseDTO;
-import com.thahawuru_wallet.application.dto.response.ApiUserLoginResponseDTO;
-import com.thahawuru_wallet.application.dto.response.LoginResponseDTO;
-import com.thahawuru_wallet.application.dto.response.UserResponseDTO;
+import com.thahawuru_wallet.application.dto.response.*;
 import com.thahawuru_wallet.application.entity.ApiUser;
 import com.thahawuru_wallet.application.entity.Roles;
 import com.thahawuru_wallet.application.entity.WalletUser;
@@ -37,7 +34,8 @@ public class AuthService {
     private JWTService jwtService;
 
 
-    public LoginResponseDTO userlogin(LoginRequestDTO user) {
+
+    public WalletUserLoginResponseDTO userlogin(LoginRequestDTO user) {
         User current = userRepository.findUserByEmail(user.getEmail().toLowerCase()).orElseThrow(() -> new UserNotFoundException("User Not Found!"));
         if(!current.getRole().equals(Roles.USER)){
             throw new IllegalStateException("NOT VALID LOGIN ROUTE!");
@@ -45,7 +43,8 @@ public class AuthService {
 
         if (encryptionService.verifyPassword(user.getPassword(), current.getPassword())) {
             String token = jwtService.generateJWT(current,current.getRole());
-            return new LoginResponseDTO(new UserResponseDTO(current.getId(), current.getEmail(), current.getRole()), token);
+            WalletUser walletUser = walletUserRepository.findByUser(current).orElseThrow(()->new UserNotFoundException("USER NOT FOUND!"));
+            return new WalletUserLoginResponseDTO(new WalletUserResponseDTO(current.getId(), current.getEmail(), current.getRole(),walletUser.getId(),walletUser.getNic()),token);
         } else {
             throw new IllegalStateException("Password is incorrect!");
 

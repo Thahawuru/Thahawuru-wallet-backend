@@ -2,8 +2,8 @@ package com.thahawuru_wallet.application.controller;
 
 import com.thahawuru_wallet.application.dto.response.ApiResponse;
 import com.thahawuru_wallet.application.dto.response.QrResponseDTO;
-import com.thahawuru_wallet.application.dto.response.UserResponseDTO;
-import com.thahawuru_wallet.application.dto.response.WalletUserResponseDTO;
+import com.thahawuru_wallet.application.dto.response.WalletUserDetailsResponseDTO;
+import com.thahawuru_wallet.application.repository.WalletUserRepository;
 import com.thahawuru_wallet.application.service.QrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,20 +20,23 @@ public class QrController {
 
     @Autowired
     private  QrService qrService;
+    @Autowired
+    private WalletUserRepository walletUserRepository;
 
     @GetMapping("/{nic}")
-    public ResponseEntity<ApiResponse<WalletUserResponseDTO>>  getQrDetails(@PathVariable String nic){
+    public ResponseEntity<ApiResponse<WalletUserDetailsResponseDTO>>  getQrDetails(@PathVariable String nic){
         System.out.println("REQUESTED NIC "+ nic);
-        WalletUserResponseDTO user = qrService.getQrUser(nic);
+        WalletUserDetailsResponseDTO user = qrService.getQrUser(nic);
         System.out.println("REQUESTED user "+ user);
-        ApiResponse<WalletUserResponseDTO> response =new ApiResponse<>(HttpStatus.OK.value(), user,"sucess");
+        ApiResponse<WalletUserDetailsResponseDTO> response =new ApiResponse<>(HttpStatus.OK.value(), user,"sucess");
         return new ResponseEntity<>(response,HttpStatus.OK);
 
     }
     @GetMapping("/get/{nic}")
        public ResponseEntity<QrResponseDTO>  getQrDetailsForClient(@PathVariable String nic){
-        WalletUserResponseDTO user = qrService.getQrUser(nic);
-       QrResponseDTO response = new QrResponseDTO(user.getNic(), user.getEmail());
+        System.out.println("USER NIC"+nic);
+        WalletUserDetailsResponseDTO user = qrService.getQrUser(nic);
+       QrResponseDTO response = new QrResponseDTO(user.getUserDetails());
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
