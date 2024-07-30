@@ -85,11 +85,36 @@ public class ApiService {
         return viewAllAPIReqeusts();
     }
 
+    public boolean activeRequest(UUID apiId){
+        ApiKey api = apiKeyRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
+        api.setApistatus(ApiStatus.ACTIVE);
+        apiKeyRepository.save(api);
+        return true;
+    }
+
     public List<APIResponseDTO> declineRequest(UUID apiId){
         ApiKey api = apiKeyRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
         api.setApistatus(ApiStatus.DECLINED);
         ApiKey api2 = apiKeyRepository.save(api);
         return viewAllAPIReqeusts();
+    }
+
+    public List<APIResponseDTO> viewPendingDeveloperAPIReqeusts(ApiUser apiUser){
+        List<ApiKey> apiKeys = apiKeyRepository.findByApistatusAndApiuser(ApiStatus.PENDING,apiUser);
+
+        apiKeys.forEach(api->System.out.println(api));
+
+        return apiKeyRepository.findByApistatus(ApiStatus.PENDING).stream()
+                .map(api -> new APIResponseDTO(
+                        api.getId(),
+                        api.getApiKey(),
+                        api.getName(),
+                        api.getType(),
+                        api.getCreatedAt(),
+                        api.getApiuser(),
+                        api.getPurpose(),
+                        api.getDescription()
+                )).collect(Collectors.toList());
     }
 
 //    public List<APIResponseDTO> viewRequestedAPI(UUID developerId) {

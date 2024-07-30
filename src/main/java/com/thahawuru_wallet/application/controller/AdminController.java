@@ -53,14 +53,14 @@ public class AdminController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("API/pending")
+    @GetMapping("Api/pending")
     public ResponseEntity<ApiResponse<List<APIResponseDTO>>> viewPendingAPIReqeusts() {
         List<APIResponseDTO> apiList = apiService.viewPendingAPIReqeusts();
         ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),apiList,"success");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("API/active")
+    @GetMapping("Api/active")
     public ResponseEntity<ApiResponse<List<APIResponseDTO>>> viewActiveAPIReqeusts() {
         List<APIResponseDTO> apiList = apiService.viewActiveAPIReqeusts();
         ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),apiList,"success");
@@ -73,7 +73,14 @@ public class AdminController {
         ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-//
+
+//    @GetMapping("Api/active/{apiId}")
+//    public ResponseEntity<ApiResponse<List<APIResponseDTO>>> activeRequest(@PathVariable UUID apiId){
+//        List<APIResponseDTO> api = apiService.activeRequest(apiId);
+//        ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
+//        return new ResponseEntity<>(response,HttpStatus.OK);
+//    }
+
     @GetMapping("Api/declined/{apiId}")
     public ResponseEntity<ApiResponse<List<APIResponseDTO>>> declineRequest(@PathVariable UUID apiId){
         List<APIResponseDTO> api = apiService.declineRequest(apiId);
