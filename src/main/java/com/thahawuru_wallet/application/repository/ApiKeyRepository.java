@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ApiKeyRepository extends JpaRepository <ApiKey, UUID>{
-//    Optional<ApiKey> findByApikey(String apikey);
-
+public interface ApiKeyRepository extends JpaRepository<ApiKey, UUID> {
     Optional<ApiKey> findByApiKey(String apiKey);
     List<ApiKey> findByApiuser(ApiUser user);
     List<ApiKey> findByApistatus(ApiStatus status);
-    List<ApiKey> findByApistatusAndApiuser(ApiStatus apiStatus,ApiUser apiUser);
+
+    // New method to fetch API keys with either of the provided statuses
+    List<ApiKey> findByApistatusInAndApiuser(List<ApiStatus> apiStatuses, ApiUser apiUser);
 }

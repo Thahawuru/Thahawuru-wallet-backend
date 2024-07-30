@@ -1,6 +1,7 @@
 package com.thahawuru_wallet.application.service;
 
 import com.thahawuru_wallet.application.dto.response.APIResponseDTO;
+import com.thahawuru_wallet.application.dto.response.ApiResponseWithStatusDTO;
 import com.thahawuru_wallet.application.entity.ApiKey;
 import com.thahawuru_wallet.application.entity.ApiStatus;
 import com.thahawuru_wallet.application.entity.ApiUser;
@@ -10,6 +11,7 @@ import com.thahawuru_wallet.application.repository.ApiUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -99,13 +101,14 @@ public class ApiService {
         return viewAllAPIReqeusts();
     }
 
-    public List<APIResponseDTO> viewPendingDeveloperAPIReqeusts(ApiUser apiUser){
-        List<ApiKey> apiKeys = apiKeyRepository.findByApistatusAndApiuser(ApiStatus.PENDING,apiUser);
+    public List<ApiResponseWithStatusDTO> viewPendingDeveloperAPIReqeusts(ApiUser apiUser) {
+        List<ApiKey> apiKeys = apiKeyRepository.findByApistatusInAndApiuser(
+                Arrays.asList(ApiStatus.PENDING, ApiStatus.REQUEST), apiUser);
 
-        apiKeys.forEach(api->System.out.println(api));
+        apiKeys.forEach(api -> System.out.println(api));
 
-        return apiKeyRepository.findByApistatus(ApiStatus.PENDING).stream()
-                .map(api -> new APIResponseDTO(
+        return apiKeys.stream()
+                .map(api -> new ApiResponseWithStatusDTO(
                         api.getId(),
                         api.getApiKey(),
                         api.getName(),
@@ -113,8 +116,10 @@ public class ApiService {
                         api.getCreatedAt(),
                         api.getApiuser(),
                         api.getPurpose(),
-                        api.getDescription()
-                )).collect(Collectors.toList());
+                        api.getDescription(),
+                        api.getApistatus()
+                ))
+                .collect(Collectors.toList());
     }
 
 //    public List<APIResponseDTO> viewRequestedAPI(UUID developerId) {

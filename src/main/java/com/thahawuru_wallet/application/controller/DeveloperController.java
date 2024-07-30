@@ -2,6 +2,7 @@ package com.thahawuru_wallet.application.controller;
 
 import com.thahawuru_wallet.application.dto.response.APIResponseDTO;
 import com.thahawuru_wallet.application.dto.response.ApiResponse;
+import com.thahawuru_wallet.application.dto.response.ApiResponseWithStatusDTO;
 import com.thahawuru_wallet.application.entity.ApiUser;
 import com.thahawuru_wallet.application.entity.User;
 import com.thahawuru_wallet.application.repository.ApiUserRepository;
@@ -39,20 +40,20 @@ public class DeveloperController {
 //    }
 
     @GetMapping("Api/pending")
-    public ResponseEntity<ApiResponse<List<APIResponseDTO>>> viewPendingAPIs(@AuthenticationPrincipal User user) {
+    public ResponseEntity<ApiResponse<List<ApiResponseWithStatusDTO>>> viewPendingAPIs(@AuthenticationPrincipal User user) {
         ApiUser apiuser = apiUserRepository.findByUser(user).orElseThrow(()->new IllegalStateException("ACCOUNT IS NOT VERIFIED!")) ;
-        List<APIResponseDTO> apiList = apiService.viewPendingDeveloperAPIReqeusts(apiuser);
-        ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),apiList,"success");
+        List<ApiResponseWithStatusDTO> apiList = apiService.viewPendingDeveloperAPIReqeusts(apiuser);
+        ApiResponse<List<ApiResponseWithStatusDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),apiList,"success");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("Api/active/{apiId}")
-    public ResponseEntity<ApiResponse<List<APIResponseDTO>>> activeRequest(@PathVariable UUID apiId, @AuthenticationPrincipal User user) {
+    public ResponseEntity<ApiResponse<List<ApiResponseWithStatusDTO>>> activeRequest(@PathVariable UUID apiId, @AuthenticationPrincipal User user) {
         boolean isActivated = apiService.activeRequest(apiId);
         if (isActivated) {
             return viewPendingAPIs(user);
         } else {
-            ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), null, "Failed to activate request");
+            ApiResponse<List<ApiResponseWithStatusDTO>> response = new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), null, "Failed to activate request");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
