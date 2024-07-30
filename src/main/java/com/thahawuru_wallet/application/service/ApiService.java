@@ -43,14 +43,14 @@ public class ApiService {
                 )).collect(Collectors.toList());
     }
 
-    public List<APIResponseDTO> viewPendingAPIReqeusts(){
+    public List<ApiResponseWithStatusDTO> viewPendingAPIReqeusts(){
         List<ApiKey> apiKeys = apiKeyRepository.findByApistatus(ApiStatus.PENDING);
 
         apiKeys.forEach(api->System.out.println(api));
 
 
         return apiKeyRepository.findByApistatus(ApiStatus.PENDING).stream()
-                .map(api -> new APIResponseDTO(
+                .map(api -> new ApiResponseWithStatusDTO(
                         api.getId(),
                         api.getApiKey(),
                         api.getName(),
@@ -58,17 +58,18 @@ public class ApiService {
                         api.getCreatedAt(),
                         api.getApiuser(),
                         api.getPurpose(),
-                        api.getDescription()
+                        api.getDescription(),
+                        api.getApistatus()
                 )).collect(Collectors.toList());
     }
 
-    public List<APIResponseDTO> viewActiveAPIReqeusts(){
+    public List<ApiResponseWithStatusDTO> viewActiveAPIReqeusts(){
         List<ApiKey> apiKeys = apiKeyRepository.findByApistatus(ApiStatus.ACTIVE);
 
         apiKeys.forEach(api->System.out.println(api));
 
         return apiKeyRepository.findByApistatus(ApiStatus.ACTIVE).stream()
-                .map(api -> new APIResponseDTO(
+                .map(api -> new ApiResponseWithStatusDTO(
                         api.getId(),
                         api.getApiKey(),
                         api.getName(),
@@ -76,7 +77,8 @@ public class ApiService {
                         api.getCreatedAt(),
                         api.getApiuser(),
                         api.getPurpose(),
-                        api.getDescription()
+                        api.getDescription(),
+                        api.getApistatus()
                 )).collect(Collectors.toList());
     }
 

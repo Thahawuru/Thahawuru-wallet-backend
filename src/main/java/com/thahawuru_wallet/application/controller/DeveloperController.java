@@ -27,18 +27,6 @@ public class DeveloperController {
     @Autowired
     private ApiUserRepository apiUserRepository;
 
-//    @PostMapping ("/apiRequest")
-//    public ResponseEntity<ApiResponse<APIResponseDTO>> createAPI(@RequestBody ApiUser api){
-//        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),apiService.(api),"created");
-//        return new ResponseEntity<>(response, HttpStatus.CREATED);
-//    }
-//
-//    public ResponseEntity<ApiResponse<APIResponseDTO>> viewApiRequest(@PathVariable UUID apiId){
-//        APIResponseDTO api = apiService.viewApiRequest(apiId);
-//        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
-//        return new ResponseEntity<>(response,HttpStatus.OK);
-//    }
-
     @GetMapping("Api/pending")
     public ResponseEntity<ApiResponse<List<ApiResponseWithStatusDTO>>> viewPendingAPIs(@AuthenticationPrincipal User user) {
         ApiUser apiuser = apiUserRepository.findByUser(user).orElseThrow(()->new IllegalStateException("ACCOUNT IS NOT VERIFIED!")) ;

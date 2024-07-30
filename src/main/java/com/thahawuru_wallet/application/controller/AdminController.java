@@ -1,9 +1,6 @@
 package com.thahawuru_wallet.application.controller;
 
-import com.thahawuru_wallet.application.dto.response.APIResponseDTO;
-import com.thahawuru_wallet.application.dto.response.AdminResponseDTO;
-import com.thahawuru_wallet.application.dto.response.ApiResponse;
-import com.thahawuru_wallet.application.dto.response.MaintainerResponseDTO;
+import com.thahawuru_wallet.application.dto.response.*;
 import com.thahawuru_wallet.application.entity.Maintainer;
 import com.thahawuru_wallet.application.service.AdminService;
 import com.thahawuru_wallet.application.service.ApiService;
@@ -54,16 +51,16 @@ public class AdminController {
     }
 
     @GetMapping("Api/pending")
-    public ResponseEntity<ApiResponse<List<APIResponseDTO>>> viewPendingAPIReqeusts() {
-        List<APIResponseDTO> apiList = apiService.viewPendingAPIReqeusts();
-        ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),apiList,"success");
+    public ResponseEntity<ApiResponse<List<ApiResponseWithStatusDTO>>> viewPendingAPIReqeusts() {
+        List<ApiResponseWithStatusDTO> apiList = apiService.viewPendingAPIReqeusts();
+        ApiResponse<List<ApiResponseWithStatusDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),apiList,"success");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("Api/active")
-    public ResponseEntity<ApiResponse<List<APIResponseDTO>>> viewActiveAPIReqeusts() {
-        List<APIResponseDTO> apiList = apiService.viewActiveAPIReqeusts();
-        ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),apiList,"success");
+    public ResponseEntity<ApiResponse<List<ApiResponseWithStatusDTO>>> viewActiveAPIReqeusts() {
+        List<ApiResponseWithStatusDTO> apiList = apiService.viewActiveAPIReqeusts();
+        ApiResponse<List<ApiResponseWithStatusDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),apiList,"success");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

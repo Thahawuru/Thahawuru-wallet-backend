@@ -6,6 +6,7 @@ import com.thahawuru_wallet.application.dto.request.LoginRequestDTO;
 import com.thahawuru_wallet.application.dto.response.ApiKeyResponseDTO;
 import com.thahawuru_wallet.application.dto.response.ApiResponse;
 import com.thahawuru_wallet.application.dto.response.ApiUserLoginResponseDTO;
+import com.thahawuru_wallet.application.entity.ApiStatus;
 import com.thahawuru_wallet.application.entity.ApiUser;
 import com.thahawuru_wallet.application.entity.User;
 import com.thahawuru_wallet.application.exception.UserNotFoundException;
@@ -37,7 +38,7 @@ public class ApiKeyController {
             throw new IllegalStateException("ACCOUNT IS NOT VERIFIED!");
         }
         String key = apiKeyService.generateAPIKey(apiuser,keyDetails);
-        ApiKeyResponseDTO keyResponse =new ApiKeyResponseDTO(keyDetails.getName(),keyDetails.getType(),key);
+        ApiKeyResponseDTO keyResponse =new ApiKeyResponseDTO(keyDetails.getName(),keyDetails.getType(),key, ApiStatus.REQUEST);
         ApiResponse<ApiKeyResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),keyResponse,"success");
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
@@ -45,6 +46,7 @@ public class ApiKeyController {
     public ResponseEntity<ApiResponse<List<ApiKeyResponseDTO>>> getApiKeys(@Valid  @AuthenticationPrincipal User user){
         ApiUser apiuser = apiUserRepository.findByUser(user).orElseThrow(()->new UserNotFoundException("user does not exists!")) ;
         List<ApiKeyResponseDTO> list = apiKeyService.getUserApiKeys(apiuser);
+//        System.out.println(list);
 
         ApiResponse<List<ApiKeyResponseDTO>> response  = new ApiResponse<>(HttpStatus.OK.value(),list,"success");
         return new ResponseEntity<>(response,HttpStatus.OK);

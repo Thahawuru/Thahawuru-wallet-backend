@@ -90,7 +90,7 @@ public class ApiKeyService {
 
     public List<ApiKeyResponseDTO> getUserApiKeys(ApiUser user){
         return apiKeyRepository.findByApiuser(user).stream()
-                .map(k->new ApiKeyResponseDTO(k.getName(),k.getType(),k.getApiKey())).collect(Collectors.toList());
+                .map(k->new ApiKeyResponseDTO(k.getName(),k.getType(),k.getApiKey(),k.getApistatus())).collect(Collectors.toList());
     }
 //    public User getUserFromAPIKey(String apiKey) {
 //        Optional<ApiKey> apiKeyEntity = apiKeyRepository.findByApiKey(apiKey);
