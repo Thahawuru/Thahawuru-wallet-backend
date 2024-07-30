@@ -1,6 +1,7 @@
 package com.thahawuru_wallet.application.service;
 
 import com.thahawuru_wallet.application.dto.response.APIResponseDTO;
+import com.thahawuru_wallet.application.dto.response.ApiUserResponseDTO;
 import com.thahawuru_wallet.application.entity.ApiUser;
 import com.thahawuru_wallet.application.entity.User;
 import com.thahawuru_wallet.application.exception.UserNotFoundException;
@@ -23,7 +24,7 @@ public class ApiUserService {
 
 
     //api request details
-    public APIResponseDTO saveApiUserDetails( ApiUser api,User user){
+    public ApiUserResponseDTO saveApiUserDetails(ApiUser api, User user){
         Optional<ApiUser> apiuserOp = apiRepository.findByUser(user);
 
         ApiUser apiuser;
@@ -39,26 +40,24 @@ public class ApiUserService {
         apiuser.setName(api.getName());
         apiuser.setOrganizationName(api.getOrganizationName());
         apiuser.setNumber(api.getNumber());
-        apiuser.setPurpose(api.getPurpose());
         apiuser.setDescription(api.getDescription());
         apiuser.setStatus("requested");
-      
+
         ApiUser savedApiUser = apiRepository.save(apiuser);
 
-        return new APIResponseDTO(
+        return new ApiUserResponseDTO(
                 savedApiUser.getId(),
                 savedApiUser.getName(),
                 savedApiUser.getOrganizationName(),
                 savedApiUser.getNumber(),
-                savedApiUser.getPurpose(),
                 savedApiUser.getDescription(),
                 savedApiUser.getStatus()
         );
     }
 
 
-    public APIResponseDTO viewApiRequest(@PathVariable UUID apiID){
-        ApiUser api = apiRepository.findById(apiID).orElseThrow(()->new UserNotFoundException("api request not Found!"));
-        return new APIResponseDTO(api.getId(),api.getName(),api.getOrganizationName(),api.getNumber(),api.getPurpose(),api.getDescription(),api.getStatus());
-    }
+//    public APIResponseDTO viewApiRequest(@PathVariable UUID apiID){
+//        ApiUser api = apiRepository.findById(apiID).orElseThrow(()->new UserNotFoundException("api request not Found!"));
+//        return new APIResponseDTO(api.getId(),api.getName(),api.getOrganizationName(),api.getNumber(),api.getDescription(),api.getStatus());
+//    }
 }

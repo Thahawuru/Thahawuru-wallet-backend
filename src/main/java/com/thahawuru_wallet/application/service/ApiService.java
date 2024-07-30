@@ -1,8 +1,11 @@
 package com.thahawuru_wallet.application.service;
 
 import com.thahawuru_wallet.application.dto.response.APIResponseDTO;
+import com.thahawuru_wallet.application.entity.ApiKey;
+import com.thahawuru_wallet.application.entity.ApiStatus;
 import com.thahawuru_wallet.application.entity.ApiUser;
 import com.thahawuru_wallet.application.exception.UserNotFoundException;
+import com.thahawuru_wallet.application.repository.ApiKeyRepository;
 import com.thahawuru_wallet.application.repository.ApiUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,72 +20,76 @@ public class ApiService {
     @Autowired
     private ApiUserRepository apiUserRepository;
 
+    @Autowired
+    private ApiKeyRepository apiKeyRepository;
+
     public List<APIResponseDTO> viewAllAPIReqeusts(){
-        return apiUserRepository.findAll().stream()
-                .filter(api -> "request".equals(api.getStatus()))
+        List<ApiKey> apiKeys = apiKeyRepository.findByApistatus(ApiStatus.REQUEST);
+
+        apiKeys.forEach(api->System.out.println(api));
+
+        return apiKeyRepository.findByApistatus(ApiStatus.REQUEST).stream()
                 .map(api -> new APIResponseDTO(
                         api.getId(),
+                        api.getApiKey(),
                         api.getName(),
-                        api.getOrganizationName(),
-                        api.getNumber(),
+                        api.getType(),
+                        api.getCreatedAt(),
+                        api.getApiuser(),
                         api.getPurpose(),
-                        api.getDescription(),
-                        api.getStatus()
+                        api.getDescription()
                 )).collect(Collectors.toList());
     }
 
     public List<APIResponseDTO> viewPendingAPIReqeusts(){
-        return apiUserRepository.findAll().stream()
-                .filter(api -> "pending".equals(api.getStatus()))
+        List<ApiKey> apiKeys = apiKeyRepository.findByApistatus(ApiStatus.PENDING);
+
+        apiKeys.forEach(api->System.out.println(api));
+
+
+        return apiKeyRepository.findByApistatus(ApiStatus.PENDING).stream()
                 .map(api -> new APIResponseDTO(
                         api.getId(),
+                        api.getApiKey(),
                         api.getName(),
-                        api.getOrganizationName(),
-                        api.getNumber(),
+                        api.getType(),
+                        api.getCreatedAt(),
+                        api.getApiuser(),
                         api.getPurpose(),
-                        api.getDescription(),
-                        api.getStatus()
+                        api.getDescription()
                 )).collect(Collectors.toList());
     }
 
     public List<APIResponseDTO> viewActiveAPIReqeusts(){
-        return apiUserRepository.findAll().stream()
-                .filter(api -> "active".equals(api.getStatus()))
+        List<ApiKey> apiKeys = apiKeyRepository.findByApistatus(ApiStatus.ACTIVE);
+
+        apiKeys.forEach(api->System.out.println(api));
+
+        return apiKeyRepository.findByApistatus(ApiStatus.ACTIVE).stream()
                 .map(api -> new APIResponseDTO(
                         api.getId(),
+                        api.getApiKey(),
                         api.getName(),
-                        api.getOrganizationName(),
-                        api.getNumber(),
+                        api.getType(),
+                        api.getCreatedAt(),
+                        api.getApiuser(),
                         api.getPurpose(),
-                        api.getDescription(),
-                        api.getStatus()
+                        api.getDescription()
                 )).collect(Collectors.toList());
     }
 
-    public APIResponseDTO acceptRequest(UUID apiId){
-        ApiUser api = apiUserRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
-        api.setStatus("pending");
-        ApiUser api2 = apiUserRepository.save(api);
-        return new APIResponseDTO(api.getId(),
-                api.getName(),
-                api.getOrganizationName(),
-                api.getNumber(),
-                api.getPurpose(),
-                api.getDescription(),
-                api.getStatus());
+    public List<APIResponseDTO> acceptRequest(UUID apiId){
+        ApiKey api = apiKeyRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
+        api.setApistatus(ApiStatus.PENDING);
+        ApiKey api2 = apiKeyRepository.save(api);
+        return viewAllAPIReqeusts();
     }
 
-    public APIResponseDTO declineRequest(UUID apiId){
-        ApiUser api = apiUserRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
-        api.setStatus("declined");
-        ApiUser api2 = apiUserRepository.save(api);
-        return new APIResponseDTO(api.getId(),
-                api.getName(),
-                api.getOrganizationName(),
-                api.getNumber(),
-                api.getPurpose(),
-                api.getDescription(),
-                api.getStatus());
+    public List<APIResponseDTO> declineRequest(UUID apiId){
+        ApiKey api = apiKeyRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
+        api.setApistatus(ApiStatus.DECLINED);
+        ApiKey api2 = apiKeyRepository.save(api);
+        return viewAllAPIReqeusts();
     }
 
 //    public List<APIResponseDTO> viewRequestedAPI(UUID developerId) {

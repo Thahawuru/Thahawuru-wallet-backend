@@ -1,6 +1,7 @@
 package com.thahawuru_wallet.application.repository;
 
 import com.thahawuru_wallet.application.entity.ApiKey;
+import com.thahawuru_wallet.application.entity.ApiStatus;
 import com.thahawuru_wallet.application.entity.ApiUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,4 +14,5 @@ public interface ApiKeyRepository extends JpaRepository <ApiKey, UUID>{
 
     Optional<ApiKey> findByApiKey(String apiKey);
     List<ApiKey> findByApiuser(ApiUser user);
+    List<ApiKey> findByApistatus(ApiStatus status);
 }

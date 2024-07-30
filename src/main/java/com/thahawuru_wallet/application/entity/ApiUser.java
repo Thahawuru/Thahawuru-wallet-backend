@@ -29,12 +29,6 @@ public class ApiUser {
     @Column(name = "api_user_id", updatable = false, nullable = false)
     private UUID id;
 
-//    @Column(nullable = false)
-//    private String APIType;
-
-//    @Column(nullable = false)
-//    private UUID developerId;
-
     @Column(nullable = false)
     private String name;
 
@@ -43,9 +37,6 @@ public class ApiUser {
 
     @Column(nullable = false)
     private String number;
-
-    @Column(nullable = false)
-    private String purpose;
 
     @Column(nullable = false)
     private String description;

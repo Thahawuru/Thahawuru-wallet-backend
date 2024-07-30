@@ -49,6 +49,8 @@ public class ApiKeyService {
         apiKeyEntity.setApiKey(apiKey);
         apiKeyEntity.setName(keydetails.getName());
         apiKeyEntity.setType(keydetails.getType());
+        apiKeyEntity.setPurpose(keydetails.getPurpose());
+        apiKeyEntity.setDescription(keydetails.getApplicationDescription());
         apiKeyEntity.setApiuser(apiuser);
         apiKeyEntity.setApistatus(ApiStatus.REQUEST);
         apiKeyEntity.setCreatedAt(new Date());

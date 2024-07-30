@@ -38,7 +38,7 @@ public class ApiKeyController {
         }
         String key = apiKeyService.generateAPIKey(apiuser,keyDetails);
         ApiKeyResponseDTO keyResponse =new ApiKeyResponseDTO(keyDetails.getName(),keyDetails.getType(),key);
-        ApiResponse<ApiKeyResponseDTO> response  = new ApiResponse<>(HttpStatus.CREATED.value(),keyResponse,"success");
+        ApiResponse<ApiKeyResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),keyResponse,"success");
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
     @GetMapping("/")

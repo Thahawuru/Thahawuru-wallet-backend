@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/v1/admin")
 public class AdminController {
 
     @Autowired
@@ -46,7 +46,7 @@ public class AdminController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @GetMapping("API/all")
+    @GetMapping("Api/all")
     public ResponseEntity<ApiResponse<List<APIResponseDTO>>> viewAllAPIReqeusts() {
         List<APIResponseDTO> apiList = apiService.viewAllAPIReqeusts();
         ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),apiList,"success");
@@ -67,17 +67,17 @@ public class AdminController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("API/accept")
-    public ResponseEntity<ApiResponse<APIResponseDTO>> acceptRequest(@PathVariable UUID apiId){
-        APIResponseDTO api = apiService.acceptRequest(apiId);
-        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
+    @GetMapping("Api/accept/{apiId}")
+    public ResponseEntity<ApiResponse<List<APIResponseDTO>>> acceptRequest(@PathVariable UUID apiId){
+        List<APIResponseDTO> api = apiService.acceptRequest(apiId);
+        ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-
-    @GetMapping("API/declined")
-    public ResponseEntity<ApiResponse<APIResponseDTO>> declineRequest(@PathVariable UUID apiId){
-        APIResponseDTO api = apiService.declineRequest(apiId);
-        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
+//
+    @GetMapping("Api/declined/{apiId}")
+    public ResponseEntity<ApiResponse<List<APIResponseDTO>>> declineRequest(@PathVariable UUID apiId){
+        List<APIResponseDTO> api = apiService.declineRequest(apiId);
+        ApiResponse<List<APIResponseDTO>> response = new ApiResponse<>(HttpStatus.OK.value(),api,"success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }
