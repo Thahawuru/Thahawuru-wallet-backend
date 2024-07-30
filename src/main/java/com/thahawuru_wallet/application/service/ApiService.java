@@ -105,7 +105,7 @@ public class ApiService {
 
     public List<ApiResponseWithStatusDTO> viewPendingDeveloperAPIReqeusts(ApiUser apiUser) {
         List<ApiKey> apiKeys = apiKeyRepository.findByApistatusInAndApiuser(
-                Arrays.asList(ApiStatus.PENDING, ApiStatus.REQUEST), apiUser);
+                Arrays.asList(ApiStatus.PENDING, ApiStatus.REQUEST, ApiStatus.DECLINED), apiUser);
 
         apiKeys.forEach(api -> System.out.println(api));
 
