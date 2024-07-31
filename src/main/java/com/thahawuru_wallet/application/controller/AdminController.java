@@ -1,6 +1,5 @@
 package com.thahawuru_wallet.application.controller;
 
-import com.thahawuru_wallet.application.dto.request.MaintainerRegisterDTO;
 import com.thahawuru_wallet.application.dto.response.APIResponseDTO;
 import com.thahawuru_wallet.application.dto.response.AdminResponseDTO;
 import com.thahawuru_wallet.application.dto.response.ApiResponse;
@@ -8,7 +7,7 @@ import com.thahawuru_wallet.application.dto.response.MaintainerResponseDTO;
 import com.thahawuru_wallet.application.entity.Maintainer;
 import com.thahawuru_wallet.application.service.AdminService;
 import com.thahawuru_wallet.application.service.ApiService;
-//import com.thahawuru_wallet.application.service.MaintainerService;
+import com.thahawuru_wallet.application.service.MaintainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/api/admin")
 public class AdminController {
 
     @Autowired
@@ -27,9 +26,9 @@ public class AdminController {
     @Autowired
     private ApiService apiService;
 
-    @PostMapping("/createMaintainer")
-    public ResponseEntity<ApiResponse<MaintainerResponseDTO>> createMaintainer(@RequestBody MaintainerRegisterDTO maintainerRegisterDTO){
-        ApiResponse<MaintainerResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),adminService.createMaintainer(maintainerRegisterDTO),"created");
+    @PostMapping
+    public ResponseEntity<ApiResponse<MaintainerResponseDTO>> createMaintainer(@RequestBody Maintainer maintainer){
+        ApiResponse<MaintainerResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),adminService.createMaintainer(maintainer),"created");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

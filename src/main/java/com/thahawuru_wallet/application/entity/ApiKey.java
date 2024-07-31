@@ -50,4 +50,10 @@ public class ApiKey {
     @ManyToOne
     @JoinColumn(name = "api_user_id")
     private ApiUser apiuser;
+
+    @Column(nullable = false)
+    private String purpose;
+
+    @Column(nullable = false)
+    private String description;
 }

@@ -4,5 +4,6 @@ public enum ApiStatus {
     ACTIVE,
     REQUEST,
     PENDING,
-    INACTIVE
+    INACTIVE,
+    DECLINED
 }

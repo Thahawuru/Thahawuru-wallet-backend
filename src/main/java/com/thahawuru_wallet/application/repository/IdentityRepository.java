@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface IdentityRepository extends JpaRepository<Identity,Long> {
     List<Identity> findAll();
-
+    Optional<Identity> findByIdentityNumber(String identityNumber);
 }
 
 //

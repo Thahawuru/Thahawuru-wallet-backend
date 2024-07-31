@@ -3,6 +3,7 @@ package com.thahawuru_wallet.application.controller;
 
 import com.thahawuru_wallet.application.dto.response.APIResponseDTO;
 import com.thahawuru_wallet.application.dto.response.ApiResponse;
+import com.thahawuru_wallet.application.dto.response.ApiUserResponseDTO;
 import com.thahawuru_wallet.application.entity.ApiUser;
 import com.thahawuru_wallet.application.entity.User;
 import com.thahawuru_wallet.application.service.ApiUserService;
@@ -24,8 +25,8 @@ public class ApiUserController {
 
 
     @PostMapping("/savedetails")
-    public ResponseEntity<ApiResponse<APIResponseDTO>> apiUserSaveDetails(@RequestBody ApiUser apiuser, @AuthenticationPrincipal User user){
-        ApiResponse<APIResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),apiUserService.saveApiUserDetails(apiuser,user),"created");
+    public ResponseEntity<ApiResponse<ApiUserResponseDTO>> apiUserSaveDetails(@RequestBody ApiUser apiuser, @AuthenticationPrincipal User user){
+        ApiResponse<ApiUserResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),apiUserService.saveApiUserDetails(apiuser,user),"created");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
