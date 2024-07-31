@@ -164,7 +164,4 @@ if(walletUserRepository.findByNic(user.getNic()).isPresent()){
         }
     }
 
-
-
-
 }
