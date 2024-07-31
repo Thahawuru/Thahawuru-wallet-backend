@@ -35,7 +35,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/auth/**","/api/v1/qr/get/**","/api/v1/identities/**","/api/v1/licenses/**").permitAll()
-                        .requestMatchers("/api/v1/admin/**").permitAll()
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/maintainer/**").hasAnyRole("MAINTAINER","ADMIN")
                         .requestMatchers("/api/v1/users/**").hasAnyRole("ADMIN","MAINTAINER","USER")
                         .requestMatchers("/api/v1/apiuser/**","/api/v1/apikey/**").hasAnyRole("APIUSER","ADMIN","MAINTAINER")
