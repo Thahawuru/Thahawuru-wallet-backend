@@ -1,5 +1,6 @@
 package com.thahawuru_wallet.application.controller;
 
+import com.thahawuru_wallet.application.dto.response.NICResponseDTO;
 import com.thahawuru_wallet.application.entity.Identity;
 import com.thahawuru_wallet.application.entity.NewIdentity;
 import com.thahawuru_wallet.application.entity.UpdatedIdentity;
@@ -32,4 +33,5 @@ public class IdentityController {
     public List<NewIdentity> getAllNewIdentities(){
         return identityService.getAllNewIdentities();
     }
+
 }

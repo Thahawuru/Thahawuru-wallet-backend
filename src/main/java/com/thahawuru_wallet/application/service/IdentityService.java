@@ -34,4 +34,5 @@ public class IdentityService {
     public List<NewIdentity> getAllNewIdentities(){
         return newIdentityRepository.findAll();
     }
+
 }
