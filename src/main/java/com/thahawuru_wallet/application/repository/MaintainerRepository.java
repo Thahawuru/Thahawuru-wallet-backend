@@ -10,5 +10,6 @@ import java.util.UUID;
 
 @Repository
 public interface MaintainerRepository extends JpaRepository<Maintainer, UUID> {
-    Optional<Maintainer> findMaintainerByEmail(String email);
+//    Optional<Maintainer> findMaintainerByEmail(String email);
 }
+

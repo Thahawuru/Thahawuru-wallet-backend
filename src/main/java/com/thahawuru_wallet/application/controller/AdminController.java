@@ -1,5 +1,6 @@
 package com.thahawuru_wallet.application.controller;
 
+import com.thahawuru_wallet.application.dto.request.MaintainerRegisterDTO;
 import com.thahawuru_wallet.application.dto.response.APIResponseDTO;
 import com.thahawuru_wallet.application.dto.response.AdminResponseDTO;
 import com.thahawuru_wallet.application.dto.response.ApiResponse;
@@ -7,7 +8,7 @@ import com.thahawuru_wallet.application.dto.response.MaintainerResponseDTO;
 import com.thahawuru_wallet.application.entity.Maintainer;
 import com.thahawuru_wallet.application.service.AdminService;
 import com.thahawuru_wallet.application.service.ApiService;
-import com.thahawuru_wallet.application.service.MaintainerService;
+//import com.thahawuru_wallet.application.service.MaintainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/v1/admin")
 public class AdminController {
 
     @Autowired
@@ -26,25 +27,25 @@ public class AdminController {
     @Autowired
     private ApiService apiService;
 
-    @PostMapping
-    public ResponseEntity<ApiResponse<MaintainerResponseDTO>> createMaintainer(@RequestBody Maintainer maintainer){
-        ApiResponse<MaintainerResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),adminService.createMaintainer(maintainer),"created");
+    @PostMapping("/createMaintainer")
+    public ResponseEntity<ApiResponse<MaintainerResponseDTO>> createMaintainer(@RequestBody MaintainerRegisterDTO maintainerRegisterDTO){
+        ApiResponse<MaintainerResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),adminService.createMaintainer(maintainerRegisterDTO),"created");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{maintainerid}")
-    public ResponseEntity<ApiResponse<MaintainerResponseDTO>> getMaintainer(@PathVariable UUID maintainerid){
-        MaintainerResponseDTO maintainer = adminService.getMaintainer(maintainerid);
-        ApiResponse<MaintainerResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),maintainer,"success");
-        return new ResponseEntity<>(response,HttpStatus.OK);
-    }
-
-    @GetMapping("delete/{maintainerid}")
-    public  ResponseEntity<ApiResponse<MaintainerResponseDTO>> inactiveMaintianer(@PathVariable UUID maintainerid){
-        MaintainerResponseDTO maintainer = adminService.inactiveMaintainer(maintainerid);
-        ApiResponse<MaintainerResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),maintainer,"success");
-        return new ResponseEntity<>(response,HttpStatus.OK);
-    }
+//    @GetMapping("/{maintainerid}")
+//    public ResponseEntity<ApiResponse<MaintainerResponseDTO>> getMaintainer(@PathVariable UUID maintainerid){
+//        MaintainerResponseDTO maintainer = adminService.getMaintainer(maintainerid);
+//        ApiResponse<MaintainerResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),maintainer,"success");
+//        return new ResponseEntity<>(response,HttpStatus.OK);
+//    }
+//
+//    @GetMapping("delete/{maintainerid}")
+//    public  ResponseEntity<ApiResponse<MaintainerResponseDTO>> inactiveMaintianer(@PathVariable UUID maintainerid){
+//        MaintainerResponseDTO maintainer = adminService.inactiveMaintainer(maintainerid);
+//        ApiResponse<MaintainerResponseDTO> response = new ApiResponse<>(HttpStatus.OK.value(),maintainer,"success");
+//        return new ResponseEntity<>(response,HttpStatus.OK);
+//    }
 
     @GetMapping("API/all")
     public ResponseEntity<ApiResponse<List<APIResponseDTO>>> viewAllAPIReqeusts() {
