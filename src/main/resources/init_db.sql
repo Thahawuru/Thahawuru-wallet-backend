@@ -18,7 +18,8 @@ INSERT INTO identities (issued_date, identity_number, name, other_names, birth_d
                                                                                                                                      ('2022-01-17', '200108000175', 'Chandana Wickramasinghe', 'Chandi', '1993-06-22', 'Kalutara', 'Police Officer', 'Address 17', 'Document 17'),
                                                                                                                                      ('2022-01-18', '200108000176', 'Nalini Fernando', 'Nali', '1988-10-01', 'Kegalle', 'Social Worker', 'Address 18', 'Document 18'),
                                                                                                                                      ('2022-01-19', '200108000177', 'Upul Perera', 'Upu', '1990-05-11', 'Ampara', 'Electrician', 'Address 19', 'Document 19'),
-                                                                                                                                     ('2022-01-20', '200108000178', 'Rashmi Kumari', 'Rashi', '1987-12-05', 'Monaragala', 'Journalist', 'Address 20', 'Document 20');
+                                                                                                                                     ('2022-01-20', '200108000178', 'Rashmi Kumari', 'Rashi', '1987-12-05', 'Monaragala', 'Journalist', 'Address 20', 'Document 20'),
+                                                                                                                                     ('2010-06-25','200117701551','G.W.D. Banuka', 'Banuka','2001-06-25','Galkissa','Politician','Address 21', 'Document 21');
 
 
 INSERT INTO new_identities (issued_date, identity_number, name, other_names, birth_date, birth_place, job, living_address, document)
@@ -100,8 +101,8 @@ INSERT INTO licenses (
       ('B5445606', '200108000175', 'Ishani Wickramasinghe', 'Anka 1414 Olive Sit', '1994-05-17', '2024-05-17', '2034-05-17', 'O-', 'Car', 'doc17.pdf'),
       ('B5445607', '200108000176', 'Janith Perera', 'Anka 1515 Sequoia Sit', '1995-06-18', '2025-06-18', '2035-06-18', 'A+', 'Bike', 'doc18.pdf'),
       ('B5445608', '200108000177', 'Kanchana Senarath', 'Anka 1616 Beech Sit', '1996-07-19', '2026-07-19', '2036-07-19', 'B+', 'Car,Truck', 'doc19.pdf'),
-      ('B5445609', '200108000178', 'Lalith Gunawardena', 'Anka 1717 Dogwood Sit', '1997-08-20', '2027-08-20', '2037-08-20', 'AB+', 'Car,Bike', 'doc20.pdf');
-
+      ('B5445609', '200108000178', 'Lalith Gunawardena', 'Anka 1717 Dogwood Sit', '1997-08-20', '2027-08-20', '2037-08-20', 'AB+', 'Car,Bike', 'doc20.pdf'),
+    ('B5445610','200117701551', 'G.W.D. Banuka', 'Galkissa', '2001-06-25', '2001-06-25', '2027-08-20','2027-08-20', 'O+' , 'Car,Bike', 'doc21.pdf');
 
 INSERT INTO new_licenses (
     license_number,
