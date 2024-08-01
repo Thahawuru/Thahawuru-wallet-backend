@@ -25,6 +25,7 @@ public class QrService {
 
 
     public WalletUserDetailsResponseDTO getQrUser(String nic){
+        System.out.println("NIC SCANNED"+nic);
         WalletUser walletUser = walletUserRepository.findByNic(nic).orElseThrow(()->new UserNotFoundException("user1 not found"));
         User user = userRepository.findById(walletUser.getUser().getId()).orElseThrow(()-> new UserNotFoundException("user2 not found"));
         BlockchainResponseDTO qrdetails  = blockchainService.getUserIdentityDetails(nic);
