@@ -9,8 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.thahawuru-wallet</groupId>
-	<artifactId>application</artifactId>
+	<artifactId>police-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>application</name>
 	<description>Thahawuru Wallet application</description>
 	<url/>

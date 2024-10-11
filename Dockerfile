@@ -1,27 +1,20 @@
-# Stage 1: Build the JAR file using Maven (or Gradle if you prefer)
-FROM maven:3.9.9-eclipse-temurin-22-alpine as build
+# Use OpenJDK version 22 as a base image (change to the actual JDK 22 image if available)
+FROM maven:3.9.9-eclipse-temurin-22-alpine
 
-# Set the working directory inside the container
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the pom.xml file and the source code into the container
-COPY pom.xml .
-COPY src ./src
+# Install Maven for building and running in dev mode
 
-# Run Maven to build the project and create the JAR file
-RUN mvn clean package -DskipTests
+# Copy the pom.xml and download dependencies (caching dependencies)
+COPY pom.xml /app/
+RUN mvn dependency:go-offline
 
-# Stage 2: Use a minimal Java image to run the application
-FROM eclipse-temurin:21-jdk-alpine
+# Copy the application source code to the container (this will be overridden by volume in dev)
+COPY src /app/src
 
-# Set the working directory for the application
-WORKDIR /app
-
-# Copy the JAR file from the build stage
-COPY --from=build /app/target/*.jar ./app.jar
-
-# Expose the port used by the Spring Boot application
+# Expose the port Spring Boot will run on
 EXPOSE 8082
 
-# Run the JAR file
-CMD ["java", "-jar", "app.jar"]
+# Default entry point for development (compile and run the project)
+# CMD ["mvn", "spring-boot:run"]
