@@ -1,0 +1,40 @@
+{
+  "new_licenses": [
+    {
+      "license_number": "B5445596",
+      "identity_number": "200108000165",
+      "name": "Xavier Wijesinghe",
+      "living_address": "Anka 303 Birch Sit",
+      "birth_date": "1995-06-06",
+      "issued_date": "2025-06-06",
+      "expiry_date": "2035-06-06",
+      "blood_group": "A+",
+      "vehicles_allowed": ["Car", "Bike"],
+      "document": "doc06.pdf"
+    },
+    {
+      "license_number": "B5445597",
+      "identity_number": "200108000166",
+      "name": "Yasodha Bandara",
+      "living_address": "Anka 404 Cedar Sit",
+      "birth_date": "1996-07-07",
+      "issued_date": "2026-07-07",
+      "expiry_date": "2036-07-07",
+      "blood_group": "O-",
+      "vehicles_allowed": ["Bike"],
+      "document": "doc07.pdf"
+    },
+    {
+      "license_number": "B5445598",
+      "identity_number": "200108000167",
+      "name": "Zoysa Senanayake",
+      "living_address": "Anka 505 Spruce Sit",
+      "birth_date": "1997-08-08",
+      "issued_date": "2027-08-08",
+      "expiry_date": "2037-08-08",
+      "blood_group": "AB-",
+      "vehicles_allowed": ["Car"],
+      "document": "doc08.pdf"
+    }
+  ]
+}
