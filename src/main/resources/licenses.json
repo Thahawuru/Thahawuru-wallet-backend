@@ -1,0 +1,64 @@
+{
+  "licenses": [
+    {
+      "license_number": "B5445590",
+      "identity_number": "200108000159",
+      "name": "Sunil Perera",
+      "living_address": "Anka 123 Main Sit",
+      "birth_date": "1990-01-01",
+      "issued_date": "2020-01-01",
+      "expiry_date": "2030-01-01",
+      "blood_group": "O+",
+      "vehicles_allowed": ["Car", "Bike"],
+      "document": "doc01.pdf"
+    },
+    {
+      "license_number": "B5445591",
+      "identity_number": "200108000160",
+      "name": "Thushari Silva",
+      "living_address": "Anka 456 Elm Sit",
+      "birth_date": "1991-02-02",
+      "issued_date": "2021-02-02",
+      "expiry_date": "2031-02-02",
+      "blood_group": "A-",
+      "vehicles_allowed": ["Bike"],
+      "document": "doc02.pdf"
+    },
+    {
+      "license_number": "B5445592",
+      "identity_number": "200108000161",
+      "name": "Udeni Fernando",
+      "living_address": "Anka 789 Oak Sit",
+      "birth_date": "1992-03-03",
+      "issued_date": "2022-03-03",
+      "expiry_date": "2032-03-03",
+      "blood_group": "B+",
+      "vehicles_allowed": ["Car"],
+      "document": "doc03.pdf"
+    },
+    {
+      "license_number": "B5445593",
+      "identity_number": "200108000162",
+      "name": "Vimal Weerasinghe",
+      "living_address": "Anka 101 Pine Sit",
+      "birth_date": "1993-04-04",
+      "issued_date": "2023-04-04",
+      "expiry_date": "2033-04-04",
+      "blood_group": "AB+",
+      "vehicles_allowed": ["Car", "Truck"],
+      "document": "doc04.pdf"
+    },
+    {
+      "license_number": "B5445594",
+      "identity_number": "200108000163",
+      "name": "Wasanthi Jayasinghe",
+      "living_address": "Anka 202 Maple Sit",
+      "birth_date": "1994-05-05",
+      "issued_date": "2024-05-05",
+      "expiry_date": "2034-05-05",
+      "blood_group": "B-",
+      "vehicles_allowed": ["Truck"],
+      "document": "doc05.pdf"
+    }
+  ]
+}
