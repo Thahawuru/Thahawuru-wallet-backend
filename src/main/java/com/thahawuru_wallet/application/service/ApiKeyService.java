@@ -44,11 +44,17 @@ public class ApiKeyService {
         // Concatenate both parts
         String apiKey = randomKeyPart + "." + signedPart;
 
+        if (keydetails.getSelection() == "identitiy"){
+            keydetails.setSelection("1");
+        }else {
+            keydetails.setSelection("2");
+        }
         // Store in database
         ApiKey apiKeyEntity = new ApiKey();
         apiKeyEntity.setApiKey(apiKey);
         apiKeyEntity.setName(keydetails.getName());
         apiKeyEntity.setType(keydetails.getType());
+        apiKeyEntity.setApidata_type(keydetails.getSelection());
         apiKeyEntity.setPurpose(keydetails.getPurpose());
         apiKeyEntity.setDescription(keydetails.getApplicationDescription());
         apiKeyEntity.setApiuser(apiuser);
