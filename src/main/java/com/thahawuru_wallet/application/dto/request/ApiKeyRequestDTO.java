@@ -13,5 +13,6 @@ public class ApiKeyRequestDTO {
     private String name;
     private String purpose;
     private String type;
+    private String selection;
     private String applicationDescription;
 }
