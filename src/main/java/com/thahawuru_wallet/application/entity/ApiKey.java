@@ -39,8 +39,10 @@ public class ApiKey {
     @Column(nullable = false)
     private String type;
 
+    @Column(nullable = false, columnDefinition = "int default 1")
+    private int apidata_type;
 
-    @Column(nullable = false ,updatable = false)
+    @Column(nullable = false)
     private Date createdAt;
 
     @Enumerated(EnumType.STRING)
