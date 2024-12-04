@@ -34,9 +34,9 @@ public class ApiKeyController {
     @PostMapping("/generate")
     public ResponseEntity<ApiResponse<ApiKeyResponseDTO>> generateApiKey(@Valid @RequestBody ApiKeyRequestDTO keyDetails , @AuthenticationPrincipal User user){
         ApiUser apiuser = apiUserRepository.findByUser(user).orElseThrow(()->new IllegalStateException("ACCOUNT IS NOT VERIFIED!")) ;
-        if(!apiuser.isVerified()){
-            throw new IllegalStateException("ACCOUNT IS NOT VERIFIED!");
-        }
+//        if(!apiuser.isVerified()){
+//            throw new IllegalStateException("ACCOUNT IS NOT VERIFIED!");
+//        }
         String key = apiKeyService.generateAPIKey(apiuser,keyDetails);
         ApiKeyResponseDTO keyResponse =new ApiKeyResponseDTO(keyDetails.getName(),keyDetails.getType(),key, ApiStatus.REQUEST);
         ApiResponse<ApiKeyResponseDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(),keyResponse,"success");

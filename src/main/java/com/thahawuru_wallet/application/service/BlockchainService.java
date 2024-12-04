@@ -22,7 +22,7 @@ public class BlockchainService {
     private static final String SYSTEM_URL ="http://localhost:3010/api/";
 
 
-    public NICResponseDTO getNicDetails(String nicId) {
+    public NICResponseDTO getNicDetails(String nicId,String apiKey) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("THAHAWURU-API-KEY", SYSTEM_API_KEY);
@@ -32,7 +32,7 @@ public class BlockchainService {
         try{
 
             ResponseEntity<NICResponseDTO> response = restTemplate.exchange(
-                    SYSTEM_URL +"/identity/"+nicId,
+                    SYSTEM_URL +"/identity/"+nicId+"?apiKey=" + apiKey,
                     HttpMethod.GET,
                     entity,
                     NICResponseDTO.class
@@ -48,7 +48,9 @@ public class BlockchainService {
 
     }
 
-    public LicenseResponseDTO getLicenseDetails(String nicId) {
+
+
+    public LicenseResponseDTO getLicenseDetails(String nicId,String apiKey) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("THAHAWURU-API-KEY", SYSTEM_API_KEY);
@@ -58,7 +60,7 @@ public class BlockchainService {
         try{
 
             ResponseEntity<LicenseResponseDTO> response = restTemplate.exchange(
-                    SYSTEM_URL +"/license/"+nicId,
+                    SYSTEM_URL +"/license/"+nicId+"?apiKey=" + apiKey,
                     HttpMethod.GET,
                     entity,
                     LicenseResponseDTO.class
@@ -74,18 +76,58 @@ public class BlockchainService {
 
     }
 
+    public NICResponseDTO getWalletDetails(String nicId) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("THAHAWURU-API-KEY", SYSTEM_API_KEY);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        try{
+
+            ResponseEntity<NICResponseDTO> response = restTemplate.exchange(
+                    SYSTEM_URL +"/identity/walletuser/"+nicId,
+                    HttpMethod.GET,
+                    entity,
+                    NICResponseDTO.class
+            );
+            System.out.println("BLOCK RESPONSE"+response.getBody());
+            return response.getBody();
+        }catch(Exception ex){
+            System.out.println(ex);
+            throw new UserNotFoundException("user data not found!");
+        }
+
+//        System.out.println("this is the response"+response);
+
+    }
+
 
 
     @Transactional
-    public BlockchainResponseDTO getUserIdentityDetails(String nicId) {
+    public BlockchainResponseDTO getUserIdentityDetails(String nicId,String apiKey) {
         try{
-            LicenseResponseDTO licnese =this.getLicenseDetails(nicId);
-            NICResponseDTO nic =this.getNicDetails(nicId);
+            LicenseResponseDTO licnese =this.getLicenseDetails(nicId,apiKey);
+            NICResponseDTO nic =this.getNicDetails(nicId,apiKey);
             BlockchainResponseDTO response = new BlockchainResponseDTO(licnese,nic);
             return response;
         }catch(Exception ex){
             System.out.println(ex);
             throw new UserNotFoundException("user3 data not found!");
+        }
+
+//        System.out.println("this is the response"+response);
+
+    }
+
+    @Transactional
+    public BlockchainResponseDTO getWalletUserIdentityDetails(String nicId) {
+        try{
+            LicenseResponseDTO licnese =new LicenseResponseDTO();
+            NICResponseDTO nic =this.getWalletDetails(nicId);
+            BlockchainResponseDTO response = new BlockchainResponseDTO(licnese,nic);
+            return response;
+        }catch(Exception ex){
+            throw new UserNotFoundException("identity data not found!");
         }
 
 //        System.out.println("this is the response"+response);

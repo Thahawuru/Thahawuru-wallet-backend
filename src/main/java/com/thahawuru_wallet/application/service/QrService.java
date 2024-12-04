@@ -1,6 +1,5 @@
 package com.thahawuru_wallet.application.service;
 
-
 import com.thahawuru_wallet.application.dto.response.BlockchainResponseDTO;
 import com.thahawuru_wallet.application.dto.response.WalletUserDetailsResponseDTO;
 import com.thahawuru_wallet.application.entity.User;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class QrService {
-
     @Autowired
     private UserRepository userRepository;
 
@@ -23,13 +21,17 @@ public class QrService {
     @Autowired
     private BlockchainService blockchainService;
 
-
-    public WalletUserDetailsResponseDTO getQrUser(String nic){
-        System.out.println("NIC SCANNED"+nic);
-        WalletUser walletUser = walletUserRepository.findByNic(nic).orElseThrow(()->new UserNotFoundException("user1 not found"));
-        User user = userRepository.findById(walletUser.getUser().getId()).orElseThrow(()-> new UserNotFoundException("user2 not found"));
-        BlockchainResponseDTO qrdetails  = blockchainService.getUserIdentityDetails(nic);
+    public WalletUserDetailsResponseDTO getQrUser(String nic,String apiKey){
+        WalletUser walletUser = walletUserRepository.findByNic(nic).orElseThrow(()->new UserNotFoundException("NIC not found"));
+        User user = userRepository.findById(walletUser.getUser().getId()).orElseThrow(()-> new UserNotFoundException("user not found"));
+        BlockchainResponseDTO qrdetails  = blockchainService.getUserIdentityDetails(nic,apiKey);
         return new WalletUserDetailsResponseDTO(user.getId(),walletUser.getId(),user.getEmail(), walletUser.getNic(),qrdetails);
     }
 
+    public WalletUserDetailsResponseDTO getQrWalletUser(String nic){
+        WalletUser walletUser = walletUserRepository.findByNic(nic).orElseThrow(()->new UserNotFoundException("NIC not found"));
+        User user = userRepository.findById(walletUser.getUser().getId()).orElseThrow(()-> new UserNotFoundException("user not found"));
+        BlockchainResponseDTO qrdetails  = blockchainService.getWalletUserIdentityDetails(nic);
+        return new WalletUserDetailsResponseDTO(user.getId(),walletUser.getId(),user.getEmail(), walletUser.getNic(),qrdetails);
+    }
 }
