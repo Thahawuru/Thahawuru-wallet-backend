@@ -43,7 +43,7 @@ public class ApiService {
                 )).collect(Collectors.toList());
     }
 
-    public List<ApiResponseWithStatusDTO> viewPendingAPIReqeusts(){
+    public List<APIResponseDTO> viewPendingAPIReqeusts(){
         List<ApiKey> apiKeys = apiKeyRepository.findByApistatus(ApiStatus.PENDING);
 
         apiKeys.forEach(api->System.out.println(api));
@@ -63,7 +63,7 @@ public class ApiService {
                 )).collect(Collectors.toList());
     }
 
-    public List<ApiResponseWithStatusDTO> viewActiveAPIReqeusts(){
+    public List<APIResponseDTO> viewActiveAPIReqeusts(){
         List<ApiKey> apiKeys = apiKeyRepository.findByApistatus(ApiStatus.ACTIVE);
 
         apiKeys.forEach(api->System.out.println(api));
@@ -82,7 +82,7 @@ public class ApiService {
                 )).collect(Collectors.toList());
     }
 
-    public List<APIResponseDTO> acceptRequest(UUID apiId){
+    public APIResponseDTO acceptRequest(UUID apiId){
         ApiKey api = apiKeyRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
         api.setApistatus(ApiStatus.PENDING);
         ApiKey api2 = apiKeyRepository.save(api);
@@ -96,7 +96,7 @@ public class ApiService {
         return true;
     }
 
-    public List<APIResponseDTO> declineRequest(UUID apiId){
+    public APIResponseDTO declineRequest(UUID apiId){
         ApiKey api = apiKeyRepository.findById(apiId).orElseThrow(()->new UserNotFoundException("User not Found!"));
         api.setApistatus(ApiStatus.DECLINED);
         ApiKey api2 = apiKeyRepository.save(api);

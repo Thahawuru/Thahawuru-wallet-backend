@@ -14,7 +14,5 @@ public class MaintainerResponseDTO {
     private String name;
     private String email;
     private String phoneNumber;
-    private String whatsappNumber;
     private String status;
-
 }

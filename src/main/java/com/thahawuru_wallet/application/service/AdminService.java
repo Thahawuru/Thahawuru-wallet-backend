@@ -1,13 +1,15 @@
 package com.thahawuru_wallet.application.service;
 
+import com.thahawuru_wallet.application.dto.request.MaintainerRegisterDTO;
 import com.thahawuru_wallet.application.dto.response.MaintainerResponseDTO;
 import com.thahawuru_wallet.application.entity.Maintainer;
+import com.thahawuru_wallet.application.entity.Roles;
+import com.thahawuru_wallet.application.entity.User;
 import com.thahawuru_wallet.application.exception.UserNotFoundException;
 import com.thahawuru_wallet.application.repository.MaintainerRepository;
+import com.thahawuru_wallet.application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.UUID;
 
 @Service
@@ -16,32 +18,40 @@ public class AdminService {
     @Autowired
     private MaintainerRepository maintainerRepository;
 
-    public MaintainerResponseDTO createMaintainer(Maintainer maintainer){
-        if(maintainerRepository.findMaintainerByEmail(maintainer.getEmail()).isPresent()){
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private EncryptionService encryptionService;
+
+    public MaintainerResponseDTO createMaintainer(MaintainerRegisterDTO maintainerRegisterDTO) {
+        if (userRepository.findUserByEmail(maintainerRegisterDTO.getEmail()).isPresent()) {
             throw new IllegalStateException("email already exists!");
-        }else{
-            Maintainer newmaintainer = new Maintainer();
-            newmaintainer.setName(maintainer.getName());
-            newmaintainer.setEmail(maintainer.getEmail());
-            newmaintainer.setPhoneNumber(maintainer.getPhoneNumber());
-            newmaintainer.setWhatsappNumber(maintainer.getWhatsappNumber());
-            newmaintainer.setStatus("Active");
-
-            Maintainer newMaintainer = maintainerRepository.save(newmaintainer);
-
-            return new MaintainerResponseDTO(newMaintainer.getId(),newMaintainer.getName(),newMaintainer.getEmail(),newMaintainer.getPhoneNumber(),newMaintainer.getWhatsappNumber(),newMaintainer.getStatus());
         }
+        System.out.println("createMaintainer");
+        User newuser = new User();
+        newuser.setEmail(maintainerRegisterDTO.getEmail());
+        newuser.setPassword(maintainerRegisterDTO.getPassword());
+        newuser.setRole(Roles.MAINTAINER);
+        User saveduser = userRepository.save(newuser);
+
+        Maintainer newMaintainer = new Maintainer();
+        newMaintainer.setStatus("Active");
+        newMaintainer.setName(maintainerRegisterDTO.getName());
+        newMaintainer.setPhoneNumber(maintainerRegisterDTO.getPhoneNumber());
+        Maintainer savedMaintainer = maintainerRepository.save(newMaintainer);
+        return new MaintainerResponseDTO(savedMaintainer.getId(),savedMaintainer.getName(), saveduser.getEmail(), savedMaintainer.getPhoneNumber(), savedMaintainer.getStatus());
     }
 
-    public MaintainerResponseDTO getMaintainer(@PathVariable UUID maintainerId){
-        Maintainer maintainer = maintainerRepository.findById(maintainerId).orElseThrow(()-> new UserNotFoundException("Maintainer not Found!"));
-        return new MaintainerResponseDTO(maintainer.getId(),maintainer.getName(),maintainer.getEmail(),maintainer.getPhoneNumber(),maintainer.getWhatsappNumber(),maintainer.getStatus());
-    }
-
-    public  MaintainerResponseDTO inactiveMaintainer(@PathVariable UUID maintainerId){
-        Maintainer maintainer = maintainerRepository.findById(maintainerId).orElseThrow(()-> new UserNotFoundException("Maintainer not Found!"));
-        maintainer.setStatus("in-active");
-        Maintainer newMaintainer = maintainerRepository.save(maintainer);
-        return new MaintainerResponseDTO(newMaintainer.getId(),newMaintainer.getName(),newMaintainer.getEmail(),newMaintainer.getPhoneNumber(),newMaintainer.getWhatsappNumber(),newMaintainer.getStatus());
-    }
+//    public MaintainerResponseDTO getMaintainer(UUID maintainerId) {
+//        Maintainer maintainer = maintainerRepository.findById(maintainerId).orElseThrow(() -> new UserNotFoundException("Maintainer not Found!"));
+//        return new MaintainerResponseDTO(maintainer.getId(), maintainer.getName(), maintainer.getEmail(), maintainer.getPhoneNumber(), maintainer.getWhatsappNumber(), maintainer.getStatus());
+//    }
+//
+//    public MaintainerResponseDTO inactiveMaintainer(UUID maintainerId) {
+//        Maintainer maintainer = maintainerRepository.findById(maintainerId).orElseThrow(() -> new UserNotFoundException("Maintainer not Found!"));
+//        maintainer.setStatus("in-active");
+//        Maintainer updatedMaintainer = maintainerRepository.save(maintainer);
+//        return new MaintainerResponseDTO(updatedMaintainer.getId(), updatedMaintainer.getName(), updatedMaintainer.getEmail(), updatedMaintainer.getPhoneNumber(), updatedMaintainer.getWhatsappNumber(), updatedMaintainer.getStatus());
+//    }
 }
