@@ -58,4 +58,7 @@ public class ApiKey {
 
     @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
+    private String apidata_type;
 }

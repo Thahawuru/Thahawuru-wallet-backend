@@ -1,3 +1,5 @@
+package com.thahawuru_wallet.application;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.core.io.ClassPathResource;
@@ -9,11 +11,15 @@ import java.nio.file.Paths;
 import java.io.IOException;
 
 @Component
-public class DBInitializer implements CommandLineRunner {
+public class DataInitializer implements CommandLineRunner {
 
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
-    public DBInitializer(JdbcTemplate jdbcTemplate) {
+    public void DBInitializer(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public DataInitializer(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
